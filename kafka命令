@@ -1,0 +1,12 @@
+kafka安装
+http://www.cloudera.com/content/cloudera/en/documentation/cloudera-kafka/latest/topics/kafka_installing.html
+
+
+
+-----------------------------------------
+消费数据
+bin/kafka-console-consumer.sh --zookeeper  10.161.211.220:2181,10.161.227.83:2181,10.162.55.67:2181  --from-beginning --topic LBS.COCO
+
+------------------------------------------
+查询消费了多少
+kafka-consumer-offset-checker --zookeeper localhost:2181 --topic LBS.WEIXIN --group weixin

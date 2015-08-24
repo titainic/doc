@@ -1,0 +1,47 @@
+CREATE EXTERNAL TABLE LBS_APP_WEIXIN
+    COMMENT "A table backed by Avro data with the Avro schema stored in HDFS"
+    ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.avro.AvroSerDe'
+    STORED AS
+    INPUTFORMAT  'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat'
+    OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat'
+    LOCATION '/usr/tmp/kite/LBS_APP_WEIXIN'
+    TBLPROPERTIES (
+        'avro.schema.url'='hdfs:///usr/tmp/kite/LBS_APP_WEIXIN/.metadata/schema.avsc'
+    );
+
+
+
+
+----------------------------------------------------------------
+
+
+DROP TABLE LBS_APP_WEIXIN;
+CREATE TABLE LBS_APP_WEIXIN(
+  ID string,
+  DEV_LNG string,
+  DEV_LAT string,
+  DISTANCE string,
+  UID string,
+  SEX string,
+  DESCS string,
+  UID_OTHER string,
+  NAME string,
+  PROVINCE string,
+  HEAD2 string,
+  HEAD string,
+  CITY string,
+  COUNTRY string,
+  COLLECTIONMAC string,
+  COLLECTTIME string,
+  DEV_ID string,
+  NODE_ID string,
+  DATA_SOURCE string,
+  INSERT_TIME string
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+load data inpath 'hdfs://govnet:8020/usr/tmp/demo01' into table LBS_APP_WEIXIN_test1
+
+load data inpath 'hdfs://govnet:8020/user/tmp' into table LBS_APP_WEIXIN PARTITION(date='20150730',prov='100');
+

@@ -1,0 +1,11 @@
+.vim /etc/mysql/my.cnf找到
+
+    bind-address           = 127.0.0.1
+
+    这行，注释掉（如下）
+
+   #bind-address           = 127.0.0.1
+
+ grant all privileges on *.* to root@"%" identified by "password" with grant option;
+
+   flush privileges;

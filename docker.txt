@@ -1,0 +1,18 @@
+ docker     run     -t     -i     test/ubuntu:v1.0        /bin/bash
+
+ docker     run  --net none   -t     -i     test/ubuntu:v1.0        /bin/bash
+
+ docker     run     -t     -i   -v /home/govnet/docker/test1:/home  test/ubuntu:v1.0        /bin/bash
+
+當結束後，我們使用   exit   來退出，現在我們的容器已經被改變了，使用       docker   commit       命令來提交更新
+後的副本。
+   sudo   docker   commit   -m   "Added   json   gem"   -a   "Docker   Newbee"   974392869b9b   ouruser/sinatra:v2
+
+
+sudo   docker   commit     974392869b9b   ubuntu:v3
+
+
+
+
+
+sudo docker run -i -t -h="binend"
