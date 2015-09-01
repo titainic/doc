@@ -1,0 +1,22 @@
+ sudo tar -zxvg jdk-7u4-linux-i586.tar.gz 
+ 1、首先到oracle下载上下载jdk-7u4-linux-i586.tar.gz 
+
+2、将jdk-7u4-linux-i586.tar.gz拷贝到/usr/lib/jvm/目录下面，这里如果没有jvm文件夹，则创建该文件夹,命令: 
+sudo mkdir jvm  //创建文件夹jvm 
+sudo cp -r  ~/download/jdk1.8.0_05   /usr/lib/jvm 
+
+
+3、设置环境变量，用gedit打开/etc/profile文件 
+sudo gedit /etc/profile 
+在文件的最后面增加： 
+export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_05
+export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH 
+export CLASSPATH=$CLASSPATH:.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib 
+
+4、将系统默认的jdk修改过来 (不可以偷懒额！)
+$ sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_05/bin/java 300 
+$ sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_05/bin/javac 300 
+$ sudo update-alternatives --config java 
+$ sudo update-alternatives --config javac 
+
+5、检测，输入java -version 
