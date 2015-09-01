@@ -1,0 +1,20 @@
+November 13th, 2012
+新下载了eclipse indigo，安装好tomcat后，导入原有的一个web project，启动后出现了ClassNotFoundException: org.springframework.web.util.Log4jConfigListener，google了，发现碰到这个问题的还真不少啊。一般碰到这个问题的原因有两种情况：
+
+1、classpath中未找到log4j.jar
+
+2、找到了多个log4j.jar
+
+这里的情况是eclipse从Helios版本开始，WTP部署web project的时候去掉了Java EE Module   Dependencies 去掉了。按照下面的步骤添加上这个依赖就ok了
+
+1、选择web project，打开属性界面
+
+2、在属性界面选择左侧树状菜单的Deployment Assembly
+
+3、点击右边的Add按钮
+
+4、选择Java Build Path Entries，点击Next
+
+5、选择Maven Dependencies，点击Finish
+
+

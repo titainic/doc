@@ -1,0 +1,12 @@
+
+ubuntu12.04中利用samba访问windows共享目录的方法
+ 
+ubuntu12.04中访问windows共享目录的方法
+（1）所需安装的包
+sudo apt-get install samba
+sudo apt-get install smbfs
+ 
+（2）操作
+smb://xx.xx.xx.xx(IP地址)，然后输入电脑登录的用户名
+和密码就可以正常访问windows共享目录了
+就这么简单！！！ 
