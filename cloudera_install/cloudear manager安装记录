@@ -1,0 +1,216 @@
+1.设置静态IP
+192.168.1.101	titanic.bin(主节点)
+192.168.1.102	titanic-lan
+
+2.修改主机名
+ 修改/etc/hostname里面的内容为
+		主机名
+192.168.1.101	titanic.bin(主节点)
+192.168.1.102	titanic.lan
+
+3.绑定ip与hostname
+新增/etc/hosts里面ip与host的映射
+192.168.1.101	titanic.bin(主节点)
+192.168.1.102	titanic.lan
+
+4设置ssh面密码登录  (从节点的拷贝到主节点)
+ ssh-copy-id 主节点到每个子节点  
+ssh-copy-id titanic@titanic.lan
+ssh-copy-id titanic@titanic.dev
+ssh-copy-id titanic@titanic.int
+
+ 然后每个子节点到主节点
+ssh-copy-id titanic@titanic.bin
+
+5 安装Oracle的JDK（所有节点）
+要把jdk的文件名修改成 /usr/lib/jvm/java-7-才可以-oracle  cloudera 
+
+6 安装和配置MySql（主节点）
+进入mysql命令行mysql -uroot -pxxxx，创建以下数据库：
+
+[root@hadoop1 opt]# mysql -uroot -p
+
+mysql> create database hive DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  create database amon DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+
+Query OK, 1 row affected (0.00 sec)
+
+mysql> create database hue DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+
+Query OK, 1 row affected (0.00 sec)
+设置root授权访问以上所有的数据库。
+
+mysql> grant all privileges on *.* to 'root'@'titanic.bin' identified by 'a' with grant option;
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> flush privileges;
+
+Query OK, 0 rows affected (0.00 sec)
+
+7关闭防火墙
+ sudo ufw disable
+
+8、安装和配置NTP服务（所有节点）
+安装ntp时间服务(主节点)
+sudo apt-get install ntp
+安装完成时候先与时间中心同步下
+ntpdate -u 202.112.10.36
+
+查看ntp时间配置
+root@hadoop1 opt]# cat /etc/ntp.conf
+driftfile /var/lib/ntp/drift
+restrict 127.0.0.1
+restrict -6 ::1
+restrict default nomodify notrap 
+server 202.112.10.36 prefer
+includefile /etc/ntp/crypto/pw
+keys /etc/ntp/keys
+
+重新启动ntp服务
+sudo /etc/init.d/ntp restart
+查看ntp
+ntpq -p
+
+
+
+从节点
+安装ntp服务
+配置以下
+配置ntp客户端（hadoop2~hadoop6）
+[Shell] 纯文本查看 复制代码
+driftfile /var/lib/ntp/drift 
+restrict 127.0.0.1
+restrict -6 ::1
+restrict default kod nomodify notrap nopeer noquery
+restrict -6 default kod nomodify notrap nopeer noquery
+#这里是主节点(内网NTP服务器)的主机名或者ip
+server hadoop1
+
+includefile /etc/ntp/crypto/pw
+keys /etc/ntp/keys
+
+
+
+useradd --system --home=/opt/cm-5.4.3/etc/init.d --no-create-home --shell=/bin/false --comment "Cloudera SCM User" cloudera-scm
+
+
+
+--------------------------------------------------------------------------------
+sudo 无密码执行
+
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# Please consider adding local content in /etc/sudoers.d/ instead of
+# directly modifying this file.
+#
+# See the man page for details on how to write a sudoers file.
+#
+Defaults	env_reset
+Defaults	mail_badpass
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+
+# User privilege specification
+root	ALL=(ALL:ALL) ALL
+titanic ALL = NOPASSWD: ALL		#添加这一行
+# Members of the admin group may gain root privileges
+#%admin ALL=(ALL) ALL			#注释这一行
+
+# Allow members of group sudo to execute any command
+#%sudo	ALL=(ALL:ALL) ALL		#注释这一行
+
+# See sudoers(5) for more information on "#include" directives:
+
+#includedir /etc/sudoers.d
+-----------------------------------------------------------
+报错
+sudo /opt/cm-5.4.3/share/cmf/schema/scm_prepare_database.sh mysql  -uroot -p --scm-host localhost scm scm scm_password
+添加
+------------------------------------------------
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
+ng bean with name 'entityManagerFactoryBean': FactoryBean threw exception on obj
+ect creation; nested exception is javax.persistence.PersistenceException: org.hi
+bernate.exception.GenericJDBCException: Could not open connection
+        at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.
+doGetObjectFromFactoryBean(FactoryBeanRegistrySupport.java:149)
+        at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.
+getObjectFromFactoryBean(FactoryBeanRegistrySupport.java:102)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getObje
+ctForBeanInstance(AbstractBeanFactory.java:1440)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBe
+an(AbstractBeanFactory.java:247)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean
+(AbstractBeanFactory.java:192)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver
+.resolveReference(BeanDefinitionValueResolver.java:322)
+        ... 17 more
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.Gener
+icJDBCException: Could not open connection
+        at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityMan
+agerImpl.java:1387)
+        at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityMan
+agerImpl.java:1310)
+        at org.hibernate.ejb.AbstractEntityManagerImpl.throwPersistenceException
+(AbstractEntityManagerImpl.java:1397)
+        at org.hibernate.ejb.TransactionImpl.begin(TransactionImpl.java:62)
+        at com.cloudera.enterprise.AbstractWrappedEntityManager.beginForRollback
+AndReadonly(AbstractWrappedEntityManager.java:85)
+        at com.cloudera.enterprise.dbutil.DbUtil.isInnoDbEnabled(DbUtil.java:472
+)
+
+
+
+2014-09-22 17:51:27,328 ERROR [main:spi.SqlExceptionHelper@147] An attempt by a
+client to checkout a Connection has timed out.
+2014-09-22 17:51:27,339  INFO [main:support.DefaultListableBeanFactory@422] Dest
+roying singletons in org.springframework.beans.factory.support.DefaultListableBe
+anFactory@715dcdeb: defining beans [commandLineConfigurationBean,entityManagerFa
+ctoryBean,com.cloudera.server.cmf.TrialState,com.cloudera.server.cmf.TrialManage
+r,com.cloudera.cmf.crypto.LicenseLoader]; root of factory hierarchy
+2014-09-22 17:51:27,341 ERROR [main:cmf.Main@202] Server failed.
+org.springframework.beans.factory.BeanCreationException: Error creating bean wit
+h name 'com.cloudera.server.cmf.TrialState': Cannot resolve reference to bean 'e
+ntityManagerFactoryBean' while setting constructor argument; nested exception is
+org.springframework.beans.factory.BeanCreationException: Error creating bean wi
+th name 'entityManagerFactoryBean': FactoryBean threw exception on object creati
+on; nested exception is javax.persistence.PersistenceException: org.hibernate.ex
+ception.GenericJDBCException: Could not open connection
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver
+.resolveReference(BeanDefinitionValueResolver.java:328)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver
+.resolveValueIfNecessary(BeanDefinitionValueResolver.java:106)
+        at org.springframework.beans.factory.support.ConstructorResolver.resolve
+ConstructorArguments(ConstructorResolver.java:616)
+        at org.springframework.beans.factory.support.ConstructorResolver.autowir
+eConstructor(ConstructorResolver.java:148)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBean
+Factory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1003)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBean
+Factory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:907)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBean
+Factory.doCreateBean(AbstractAutowireCapableBeanFactory.java:485)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBean
+Factory.createBean(AbstractAutowireCapableBeanFactory.java:456)
+        at org.springframework.beans.factory.support.AbstractBeanFactory$1.getOb
+ject(AbstractBeanFactory.java:293)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistr
+y.getSingleton(DefaultSingletonBeanRegistry.java:222)
+
+-------------------------------------------------------------------------------------
+    Cloudera 建议将 /proc/sys/vm/swappiness 设置为 0。当前设置为 60。使用 sysctl 命令在运行时更改该设置并编辑 /etc/sysctl.conf 以在重启后保存该设置。您可以继续进行安装，但可能会遇到问题，Cloudera Manager 报告您的主机由于交换运行状况不佳。以下主机受到影响：
+
+复制代码
+
+解决办法：执行下面即可
+
+    echo 0 > /proc/sys/vm/swappiness

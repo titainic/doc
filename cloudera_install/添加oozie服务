@@ -1,0 +1,4 @@
+hive的全部都要满足
+
+然后把mysql的驱动jar放到
+/var/lib/oozie/

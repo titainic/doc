@@ -1,0 +1,4 @@
+http://www.cloudera.com/content/cloudera/en/documentation/cloudera-kafka/latest/topics/kafka_packaging.html
+
+把kafka文件拷贝到/opt/cloudera/parcels/目录下
+然后在集群操作界面，Parcel界面，kafak，分配

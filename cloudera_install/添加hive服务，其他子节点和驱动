@@ -1,0 +1,7 @@
+添加hive服务，在哪个节点添加那个节点要安装mysql数据库
+
+并且给数据库添加权限
+sudo /opt/cm-5.4.3/share/cmf/schema/scm_prepare_database.sh mysql  -uroot -p --scm-host localhost scm scm scm_password
+
+并把mysql数据库驱动添加到这个目录下
+/opt/cloudera/parcels/CDH-5.4.4-1.cdh5.4.4.p0.4/lib/hive/lib/
