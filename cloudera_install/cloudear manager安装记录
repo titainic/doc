@@ -101,7 +101,7 @@ useradd --system --home=/opt/cm-5.4.3/etc/init.d --no-create-home --shell=/bin/f
 
 --------------------------------------------------------------------------------
 sudo 无密码执行
-
+修改/etc/sudoers文件里面的如下内容
 #
 # This file MUST be edited with the 'visudo' command as root.
 #
