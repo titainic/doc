@@ -26,7 +26,7 @@ ssh-copy-id titanic@titanic.int
 ssh-copy-id titanic@titanic.bin
 
 5 安装Oracle的JDK（所有节点）
-要把jdk的文件名修改成 /usr/lib/jvm/java-7-才可以-oracle  cloudera 
+要把jdk的文件名修改成 /usr/lib/jvm/java-7-oracle-cloudera     这样cloudera才识别
 
 6 安装和配置MySql（主节点）
 进入mysql命令行mysql -uroot -pxxxx，创建以下数据库：
@@ -97,7 +97,7 @@ includefile /etc/ntp/crypto/pw
 keys /etc/ntp/keys
 
 
-
+添加cloudera用户
 useradd --system --home=/opt/cm-5.4.3/etc/init.d --no-create-home --shell=/bin/false --comment "Cloudera SCM User" cloudera-scm
 
 
