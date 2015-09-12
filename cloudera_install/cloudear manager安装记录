@@ -14,6 +14,9 @@
 192.168.1.102	titanic.lan
 
 4设置ssh面密码登录  (从节点的拷贝到主节点)
+
+ssh-keygen -t rsa(每个节点都要做)
+
  ssh-copy-id 主节点到每个子节点  
 ssh-copy-id titanic@titanic.lan
 ssh-copy-id titanic@titanic.dev
