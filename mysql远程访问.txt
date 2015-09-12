@@ -1,11 +1,12 @@
-.vim /etc/mysql/my.cnf�ҵ�
+.vim /etc/mysql/my.cnf找到
 
     bind-address           = 127.0.0.1
 
-    ���У�ע�͵������£�
+    这行，注释掉（如下）
 
    #bind-address           = 127.0.0.1
 
- grant all privileges on *.* to root@"%" identified by "password" with grant option;
+//授权root用户远程访问，其中% 表示可以远程访问
+ grant all privileges on *.* to 'root'@'%' identified by 'a' with grant option;
 
    flush privileges;
