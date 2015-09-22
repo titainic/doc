@@ -1,0 +1,42 @@
+1.ubuntu系统开启root密码，能远程登陆root用户，
+
+2.配置环境变了
+sudo gedit /etc/profile
+export PATH=$PATH:/home/titanic/soft/spark1.5/spark-1.5.0-bin-hadoop2.6/bin
+
+3.配置spark  目录下面conf/spark-env.sh
+----------------------------------------------------------------------------
+#jdk环境变了
+export JAVA_HOME=/usr/lib/jvm/java-7-oracle-cloudera
+
+#hive的jar目录
+export CLASSPATH=$CLASSPATH:/opt/cloudera/parcels/CDH/lib/hive/lib
+#export SCALA_HOME=/opt/cloudera/parcels/CDH/lib/scala
+
+#主节点的域名host
+export SPARK_MASTER_IP=binend
+
+#端口，默认
+export SPARK_MASTER_PORT=7077
+
+#spark使用内存1G
+export SPARK_WORKER_MEMORY=1g
+
+#spark使用on-yarn模式，要配置hadoop的onf目录，这里配置的是cloudera的hadoop的conf目录
+export HADOOP_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hadoop/etc/hadoop
+
+#hive的配置目录使用spark，运行hive的sql
+export HIVE_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hive/conf
+#export HIVE_SERVER2_THRIFT_PORT=10001
+#export HIVE_SERVER2_THRIFT_BIND_HOST=binend
+
+#照抄
+export SPARK_CLASSPATH=$SPARK_CLASSPATH:/opt/cloudera/parcels/CDH/lib/hive/lib/mysql-connector-java-5.1.36.jar
+-----------------------------------------------------------------------------------
+4.配置spark目录下conf/slaves 文件  子节点host
+binend
+titanic
+lan
+
+5.启动集群。启动主节点sbin目录下面start-all.sh
+6.关闭集群。关闭主节点sbin目录下面stop-all.sh  很慢，要等几分钟
