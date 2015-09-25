@@ -10,3 +10,7 @@ bin/kafka-console-consumer.sh --zookeeper  10.161.211.220:2181,10.161.227.83:218
 ------------------------------------------
 查询消费了多少
 kafka-consumer-offset-checker --zookeeper localhost:2181 --topic LBS.WEIXIN --group weixin
+
+-------------------------------------------------------------------------------------------------------------------
+Maximum Connections per IP Address
+max.connections.per.id = 200    //cloudera里面设置kafka每个ip能有200个连接
