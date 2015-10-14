@@ -97,7 +97,7 @@ includefile /etc/ntp/crypto/pw
 keys /etc/ntp/keys
 
 
-添加cloudera用户
+添加cloudera用户(所有节点)
 useradd --system --home=/opt/cm-5.4.3/etc/init.d --no-create-home --shell=/bin/false --comment "Cloudera SCM User" cloudera-scm
 
 
