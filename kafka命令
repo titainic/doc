@@ -1,7 +1,8 @@
 kafka安装
 http://www.cloudera.com/content/cloudera/en/documentation/cloudera-kafka/latest/topics/kafka_installing.html
 
-
+生产数据
+bin/kafka-console-producer  --broker-list 10.161.211.220:2181,10.161.227.83:2181,10.162.55.67:2181 --topic HJW.T1
 
 -----------------------------------------
 消费数据
