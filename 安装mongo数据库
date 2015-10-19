@@ -1,9 +1,31 @@
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 
 echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
-
-
 sudo apt-get update
-
-
 sudo apt-get install -y mongodb-org=2.6.1 mongodb-org-server=2.6.1 mongodb-org-shell=2.6.1 mongodb-org-mongos=2.6.1 mongodb-org-tools=2.6.1
+--------------------------------------------------------
+MongoDB 3.0.3创建用户
+1 创建root角色用户(超级管理员)
+？？？
+2 创建数据库order 的用户,并赋予当前库管理员权限
+db.createUser({user:"mongo",pwd:"123456",roles:["dbAdmin","readWrite"]})
+这样客户端连接数据库，对数据库进行各种操作就需要授权了。可用如下命令：
+use admin
+db.auth(‘root’,’123456′)
+成功会返回1。
+或者在连接时
+mongo 192.168.11.6:27017 -u root -p 123456 –authenticationDatabase admin
+注：所有用户在admin库的system.users集合中
+请参考官方文档：
+http://docs.mongodb.org/master/tutorial/install-mongodb-on-ubuntu/?_ga=1.214436439.1164556674.1433378124
+http://docs.mongoing.com/manual-zh/tutorial/install-mongodb-on-ubuntu.html
+------------------------------------------------------------
+默认安装的话只允许 127.0.0.1 的IP 连接.
+需要修改/etc/mongodb.conf 注释下列记录：
+打开文件：
+$ sudo gedit /etc/mongodb.conf
+注释记录：
+#bind_ip = 0.0.0.0 
+-----------------------------------
+not authorized（未经授权）， 应该是auth=true导致的，将其注释。
+果然，一切OK。
