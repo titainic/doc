@@ -25,7 +25,11 @@ http://docs.mongoing.com/manual-zh/tutorial/install-mongodb-on-ubuntu.html
 打开文件：
 $ sudo gedit /etc/mongodb.conf
 注释记录：
-#bind_ip = 0.0.0.0 
+#bind_ip = 0.0.0.0    (注释,支持远程访问)
+#auth=true            (注释,取消登陆验证)
+
+#service mongodb stop
+#service mongodb start
 -----------------------------------
 not authorized（未经授权）， 应该是auth=true导致的，将其注释。
 果然，一切OK。
