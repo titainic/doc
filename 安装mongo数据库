@@ -19,6 +19,37 @@ mongo 192.168.11.6:27017 -u root -p 123456 –authenticationDatabase admin
 请参考官方文档：
 http://docs.mongodb.org/master/tutorial/install-mongodb-on-ubuntu/?_ga=1.214436439.1164556674.1433378124
 http://docs.mongoing.com/manual-zh/tutorial/install-mongodb-on-ubuntu.html
+-------------------------------------------
+1. #进入数据库admin
+　　use admin
+　　
+　　2. #增加或修改用户密码
+　　db.addUser('name','pwd')
+　　
+　　3. #查看用户列表
+　　db.system.users.find()
+　　
+　　4. #用户认证
+　　db.auth('name','pwd')
+    这一个返回1就认证成功了，只有认证成功才能对数据库进行操作
+    
+　　5. #删除用户
+　　db.removeUser('name')
+
+　　6. #查看所有用户
+　　show users
+　　
+　　7. #查看所有数据库
+　　show dbs
+
+　　8. #查看所有的collection
+　　show collections
+
+　　9. #查看各collection的状态
+　　db.printCollectionStats()
+
+　　10. #查看主从复制状态
+　　db.printReplicationInfo()
 ------------------------------------------------------------
 默认安装的话只允许 127.0.0.1 的IP 连接.
 需要修改/etc/mongodb.conf 注释下列记录：
