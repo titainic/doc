@@ -26,6 +26,17 @@ export SPARK_WORKER_MEMORY=1g
 
 #spark使用on-yarn模式，要配置hadoop的onf目录，这里配置的是cloudera的hadoop的conf目录
 export HADOOP_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hadoop/etc/hadoop
+export YARN_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hadoop-yarn/etc/hadoop
+
+#***********************************************
+#这个是spark链接hadoop的yarn模式下的默认配置
+#export SPARK_EXECUTOR_INSTANCES=6
+#export SPARK_EXECUTOR_CORES=2
+#export SPARK_EXECUTOR_MEMORY=6G
+#export SPARK_DRIVER_MEMORY=2G
+#在yarn中默认显示的名称
+export SPARK_YARN_APP_NAME=tCloudSpark1.5.1
+#***********************************************
 
 #hive的配置目录使用spark，运行hive的sql
 export HIVE_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hive/conf
