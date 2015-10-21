@@ -56,3 +56,10 @@ lan
 
 5.启动集群。启动主节点sbin目录下面start-all.sh
 6.关闭集群。关闭主节点sbin目录下面stop-all.sh  很慢，要等几分钟
+--------------------------------------------------------------
+spark启动./sbin/start-thriftserver.sh 模式,说明,就是启动一个jdbc服务.连接spark集群,spark集群使用yarn模式.
+就相当于程序代码通过spark访问hive里面数据库的表.可以通过jdbc连接
+./sbin/start-thriftserver.sh --master yarn --driver-memory 2G --executor-memory 6G  --hiveconf hive.server2.thrift.port=10001 --name spark-thriftserver
+
+jdbc URL
+jdbc:hive2://t1m1.tcloud.com:10001/data2
