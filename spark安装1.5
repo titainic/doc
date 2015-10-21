@@ -65,3 +65,18 @@ spark启动./sbin/start-thriftserver.sh 模式,说明,就是启动一个jdbc服�
 
 jdbc URL
 jdbc:hive2://t1m1.tcloud.com:10001/data2
+  2、经在公司的测试集群中进行相应的配置与调试得如下结论：
+          （1）、Spark的运行模式的概念只是在提交作业(job)的时候，是把作业任务向yarn集群提交，还是向Spark的standalone的集群提交（前提是spark已经启动的standalone的集群的运行进程），在代码中需要指明master的标识来区别。
+          （2）、在启动spark-thriftserver时，即可以把thriftserver的daemon的任务提交到yarn集群上运行，与可以向Spark的standalone的集群提交（前提是spark已经启动的standalone的集群的运行进程）
+                    如果是向Spark的standalone的集群提交时需要用
+${SPARK_HOME}/sbin/start-thriftserver.sh --driver-memory 2G --executor-memory 5G --master spark://t1m1.tcloud.com:7077 --hiveconf hive.server2.thrift.port=10001 --name spark-thriftserver
+这个指令来启动thriftserver，对外提供服务；
+                    如果是采用yarn模式运行thriftserver时，启动指令为：
+${SPARK_HOME}/ sbin/start-thriftserver.sh --master yarn --driver-memory 2G --executor-memory 5G  --hiveconf hive.server2.thrift.port=10001 --name spark-thriftserver
+          两者的区别在于master的参数值。
+          
+beeline：的使用跟模式无关   
+${SPARK_HOME}/bin/beeline
+beeline> !connect jdbc:hive2://t1m1.tcloud.com:10001
+beeline >select city,count(*) from data2.lbs_app_weixin group by city;
+其中，10001是spark thrift server的端口；data2表示hive数据库中数据库名；
