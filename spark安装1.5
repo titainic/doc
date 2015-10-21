@@ -6,7 +6,10 @@
 sudo gedit /etc/profile
 export PATH=$PATH:/home/titanic/soft/spark1.5/spark-1.5.0-bin-hadoop2.6/bin
 
-3.配置spark  目录下面conf/spark-env.sh
+3.要把hive的配置/opt/cloudera/parcels/CDH/lib/hive/conf/hive-site.xml,文件
+这个文件拷贝到spark/conf/目录下面
+
+4.配置spark  目录下面conf/spark-env.sh
 ----------------------------------------------------------------------------
 #jdk环境变了
 export JAVA_HOME=/usr/lib/jvm/java-7-oracle-cloudera
