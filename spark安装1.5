@@ -31,6 +31,7 @@ export SPARK_WORKER_MEMORY=1g
 export HADOOP_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hadoop/etc/hadoop
 export YARN_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hadoop-yarn/etc/hadoop
 
+
 #***********************************************
 #这个是spark链接hadoop的yarn模式下的默认配置
 #export SPARK_EXECUTOR_INSTANCES=6
@@ -48,6 +49,7 @@ export HIVE_CONF_DIR=/opt/cloudera/parcels/CDH/lib/hive/conf
 
 #照抄
 export SPARK_CLASSPATH=$SPARK_CLASSPATH:/opt/cloudera/parcels/CDH/lib/hive/lib/mysql-connector-java-5.1.36.jar
+export SPARK_JAR=/opt/cloudera/parcels/CDH/lib/spark-1.5.0/lib/spark-assembly-1.5.0-hadoop2.6.0.jar
 -----------------------------------------------------------------------------------
 4.配置spark目录下conf/slaves 文件  子节点host
 binend
