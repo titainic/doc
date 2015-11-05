@@ -1,0 +1,17 @@
+Windows/Ubuntu 双系统用户会发现在 Ubuntu 里面的时间正常的情况下Windows的系统时间被改到8小时前。
+
+原来 Linux 操作系统是以 CMOS 时间做为格林威治标准时间，再根据系统设置的时区来确定目前系统时间。但是Windows 会直接修改CMOS 时间。而中国的时区是+8区，所以才会造成时间被调整了-8个小时。
+
+所以您可以让 Windows 去使用时区或者让 Ubuntu 使用本地时间。
+
+修改 Windows 使用时区的方法是在注册表：
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation\
+
+下面增加一个名为 RealTimeIsUniversal 的REG_DWORD 键，并赋值为 1。
+
+而让Ubuntu 使用本地时间的方法是：
+
+sudo gedit /etc/default/rcS
+
+把里面的 UTC=yes 改为 UTC=no
