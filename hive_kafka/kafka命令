@@ -1,0 +1,17 @@
+kafka安装
+http://www.cloudera.com/content/cloudera/en/documentation/cloudera-kafka/latest/topics/kafka_installing.html
+
+
+
+------------------------------------------
+查询消费了多少
+kafka-consumer-offset-checker --zookeeper localhost:2181 --topic LBS.WEIXIN --group weixin
+
+-------------------------------------------------------------------------------------------------------------------
+Maximum Connections per IP Address
+max.connections.per.id = 200    //cloudera里面设置kafka每个ip能有200个连接
+------------------------------------------------------------
+生产数据
+./kafka-console-producer  --broker-list 192.168.1.127:9092 --topic HJW.T1
+ 消费数据
+./kafka-console-consumer --zookeeper 192.168.1.127:2181 --topic HJW.T1 --from-beginning

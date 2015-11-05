@@ -1,0 +1,5 @@
+M2_HOME=/home/titanic/soft/maven/apache-maven
+export MAVEN_OPTS="-Xms256m -Xmx512m"
+export PATH=$M2_HOME/bin:$PATH
+
+source /etc/profile

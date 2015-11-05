@@ -1,0 +1,7 @@
+sublime-text文本编辑工具
+sudo add-apt-repository ppa:webupd8team/sublime-text-3
+sudo apt-get update 
+sudo apt-get install sublime-text-installer
+-----------------------------------------------------------------
+Transmission(类似迅雷下载)
+sudo apt-get install transmission

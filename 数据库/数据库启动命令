@@ -1,0 +1,10 @@
+mongo数据库
+sudo service mongod start
+
+mysql数据库
+sudo start mysql #手动的话这样启动
+sudo stop mysql #手动停止
+
+redis启动
+redis-server ./soft/redis/redis/redis.conf 
+redis-cli shutdown
