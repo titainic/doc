@@ -1,3 +1,6 @@
+sudo apt-get install redis-server
+系统变了里面就有redis的那些命令了
+
 Installation
 Download, extract and compile Redis with:
 $ wget http://download.redis.io/releases/redis-2.8.17.tar.gz
