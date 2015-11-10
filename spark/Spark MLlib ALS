@@ -1,4 +1,5 @@
 http://blog.javachen.com/2015/06/01/how-to-implement-collaborative-filtering-using-spark-als.html
+http://blog.javachen.com/2015/04/17/spark-mllib-collaborative-filtering.html
 
 测试环境
 为了测试简单，在本地以local方式运行Spark，你需要做的是下载编译好的压缩包解压即可，可以参考Spark本地模式运行。
