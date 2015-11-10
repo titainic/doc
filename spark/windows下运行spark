@@ -1,0 +1,6 @@
+windows下配置SPARK_HOME环境变量，在path变量里面加入%SPARK_HOME%/bin
+
+export SPARK_HOME=/home/hadoop/spark1.2.0/spark-1.2.0-bin-hadoop2.4  
+export PATH=$SPARK_HOME/bin:$PATH  
+
+setMaster("local")
