@@ -11,6 +11,8 @@ setting->editor-> General->Show quick doc on mouse move
 #显示行号
 setting-》editor->appearance->show line number
 
+#修改鼠标选中的颜色
+setting->Editor->Colors & Fonts ->General  -> 右边的Editor下面的Selection background
 
 
 
