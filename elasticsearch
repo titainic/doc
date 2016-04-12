@@ -1,0 +1,76 @@
+https://github.com/NLPchina/elasticsearch-sql
+
+http://blog.csdn.net/geloin/article/details/8444972 es属性配置
+http://m.blog.itpub.net/29510932/viewspace-1973389/   2.1.1坑
+http://chattool.sinaapp.com/?p=405  属性说明
+
+http://www.cnblogs.com/luxiaoxun/archive/2015/10/11/4869509.html
+
+http://www.programcreek.com/java-api-examples/index.php?api=org.elasticsearch.action.bulk.BulkRequestBuilder  插入数据
+
+http://es.xiaoleilu.com/010_Intro/25_Tutorial_Indexing.html es的api
+
+https://oss.sonatype.org/content/repositories/snapshots/org/elasticsearch/elasticsearch-yarn/2.2.0.BUILD-SNAPSHOT/  es_on_yarn插件下载地址
+
+es2.2.0监控插件
+https://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/license/2.2.0/license-2.2.0.zip
+https://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/marvel-agent/2.2.0/marvel-agent-2.2.0.zip
+https://download.elasticsearch.org/elasticsearch/marvel/marvel-2.2.0.tar.gz
+
+https://www.elastic.co/guide/en/marvel/current/installing-marvel.html#offline-installation
+
+es2.2.0详解
+http://youfu.xyz/2015/11/03/elasticsearch2-cluster/
+
+es插件
+http://www.elastichq.org/features.html
+https://github.com/karmi/elasticsearch-paramedic
+https://github.com/lmenezes/elasticsearch-kopf
+https://github.com/lmenezes/elasticsearch-kopf/releases 下载
+
+es插件安装
+plugin --install knapsack --url file:///Full/Path/To/elasticsearch-knapsack-2.1.2.zip
+
+es分片设置
+http://www.cnblogs.com/dennisit/p/4133131.html
+
+es分片详细讲解
+http://my.oschina.net/secisland/blog/618312
+
+es结合hive
+http://blog.csdn.net/sunflower_cao/article/details/39896189
+https://www.elastic.co/guide/en/elasticsearch/hadoop/current/configuration.html  官网配置选项
+
+es内存设置
+ES_HOME的bin目录下有一个elasticsearch.in.sh文件,修改
+    ES_MIN_MEM＝256m
+    ES_MAX_MEM=1g
+为合适的值
+
+es配置说明
+http://www.ylzone.com/index.php/archives/4/
+
+es配置优化
+http://siye1982.github.io/2015/09/17/es-optimize/
+
+es性能优化
+http://3ms.huawei.com/hi/group/2692001/thread_4991647.html?mapId=5818163
+
+hadoop es
+https://github.com/elastic/elasticsearch-hadoop
+
+hive加载hdfs数据
+load data inpath 'hdfs://Master:9000/user/test/qar_test'   into table test_load   partition (name=‘MH');
+
+kibana
+http://kevaxe.com/%E5%AE%89%E8%A3%85elasticsearch%E3%80%81kibana%E3%80%81marvel/
+
+kylin
+kylin.metadata.url=kylin_metadata@hbase:10.1.80.249:2181
+:/hbase,hbase:10.1.80.250:2181:/hbase,hbase:10.1.80.251:2181:/hbase
+
+# The storage for final cube file in hbase
+#hbase:hd26:2181:/hbase
+kylin.storage.url=hbase:10.1.80.249:2181:/hbase,hbase:10.1.80.250:2181
+:/hbase,hbase:10.1.80.251:2181:/hbase
+
