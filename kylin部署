@@ -10,3 +10,4 @@ export KYLIN_HOME=/opt/kylin/apache-kylin-1.5.2-bin
 修改kylin运行内存bin/setenv.sh
 export KYLIN_JVM_SETTINGS="-Xms512M -Xmx512M -XX:MaxPermSize=512M -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:$KYLIN_HOME/logs/kylin.gc.$$ -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=64M"
 
+登陆密码 ADMIN/KYLIN
