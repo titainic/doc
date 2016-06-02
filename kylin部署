@@ -1,0 +1,6 @@
+配置kylin环境变量
+vi /etc/profile
+export KYLIN_HOME=/opt/kylin/apache-kylin-1.5.2-bin
+
+配置HCAT_HOME环境变量
+安装Hcat
