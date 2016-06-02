@@ -1,6 +1,12 @@
+kylin运行需要hive，hbase，hbase运行需要zookeeper
+
 配置kylin环境变量
 vi /etc/profile
 export KYLIN_HOME=/opt/kylin/apache-kylin-1.5.2-bin
 
 配置HCAT_HOME环境变量
 安装Hcat
+
+修改kylin运行内存bin/setenv.sh
+export KYLIN_JVM_SETTINGS="-Xms512M -Xmx512M -XX:MaxPermSize=512M -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:$KYLIN_HOME/logs/kylin.gc.$$ -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=64M"
+
