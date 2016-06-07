@@ -1,0 +1,56 @@
+由于服务器一般都64位系统， hadoop网站的release版本32位native库不能运行，所以需要自己在编译一下。以下是我采用的一个编译的过程，比较简单，不用下载各种版本及环境配置，通过命令就能自动完成了。系统环境为ubuntu server 64位版。
+1、安装JDK，我这里使用的是OenJDK
+sudo apt-get install default-jdk
+java -version
+ 
+显示版本信息：
+java version "1.7.0_65"
+OpenJDK Runtime Environment (IcedTea 2.5.3) (7u71-2.5.3-0ubuntu0.14.04.1)
+OpenJDK 64-Bit Server VM (build 24.65-b04, mixed mode)
+ 
+2、安装maven
+sudo apt-get install maven
+ mvn --version
+显示版本信息：
+Maven home: /usr/share/maven
+Java version: 1.7.0_65, vendor: Oracle Corporation
+Java home: /usr/lib/jvm/java-7-openjdk-amd64/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "3.13.0-32-generic", arch: "amd64", family: "unix"
+ 
+3、安装openssh
+sudo apt-get install openssh-server
+ 
+4、安装依赖库
+ sudo apt-get install g++ autoconf automake libtool cmake zlib1g-dev pkg-config libssl-dev
+ 
+5、安装protoc
+ sudo apt-get install protobuf-compiler
+ protoc --version
+显示版本信息:
+libprotoc 2.5.0
+ 
+6、OK开始编译，进入HADOOP源代码目录 hadoop-2.6.0-src，执行：
+mvn clean package -Pdist,native -DskipTests -Dtar
+ 
+好了，经过漫长等待， 应该就能得到编译好的结果了。
+
+
+--------------------------------------------------------------
+安装protoc 
+wget https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz 
+（此处下载https://code.google.com/p/protobuf/downloads/list） 
+解压执行 sudo ./configure --prefix=/usr 
+若安装报错： 
+cpp: error trying to exec 'cc1plus': execvp: No such file or directory 
+
+
+则安装g++ 
+sudo apt-get install g++ 
+
+
+执行 
+sudo make 
+sudo make check 
+sudo make install 
+protoc --version 
