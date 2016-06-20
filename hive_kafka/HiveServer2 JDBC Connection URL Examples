@@ -1,0 +1,87 @@
+https://community.hortonworks.com/articles/4103/hiveserver2-jdbc-connection-url-examples.html
+
+Short Description:
+
+Example URL's for JDBC connections to Hive Server2
+Article
+
+There are five ways to connect to HS2 with JDBC
+
+Direct - Binary Transport mode (Non-Secure|Secure)
+Direct - HTTP Transport mode (Non-Secure|Secure)
+ZooKeeper - Binary Transport mode (Non-Secure|Secure)
+ZooKeeper - HTTP Transport mode (Non-Secure|Secure)
+via Knox - HTTP Transport mode
+Connecting to HS2 via ZooKeeper (3-4) (and knox, if backed by ZooKeeper) provides a level of failover that you can't get directly. When connecting through ZooKeeper, the client is provided server connection information from a list of available servers. This list is managed on the backend and the client isn't aware of them, before the connection. This allows administrators to add additional servers to the list without reconfiguring the clients.
+
+NOTE: HS2 in this configuration is considered a Failover and is not automatic once a connection has been established. JDBC connections are stateful. The data and session information kept on HS2 for a connection is LOST when the server goes down. Jobs currently in progress, will be affected. You will need to "reconnect" to continue. At which time, you will be able to resubmit your job.
+
+Once an HS2 instance goes down, ZooKeeper will not forward connection requests to that server. By reconnecting, after an HS2 failure, you will connect to a working HS2 instance.
+
+URL Syntax
+
+jdbc:hive2://zookeeper_quorum|hs2_host:port/[db][;principal=<hs2_principal>/<hs2_host>|_HOST@<KDC_REALM>][;transportMode=binary|http][;httpPath=<http_path>][;serviceDiscoveryMode=zookeeper;zooKeeperNamespace=<zk_namespace>][;ssl=true|false][;sslKeyStore=<key_store_path>][;keyStorePassword=<key_store_password][;sslTrustStore=<trust_store_path>][;trustStorePassword=<trust_store_password>][;twoWay=true|false]
+Assumptions:
+
+HS2 Host(s): m1.hdp.local and m2.hdp.local
+
+HS2 Binary Port: 10010
+
+HS2 HTTP Port: 10011
+
+ZooKeeper Quorom: m1.hdp.local:2181,m2.hdp.local:2181:m3.hdp.local:2181
+
+HttpPath: cliservice
+
+HS2 ZooKeeper Namespace: hiveserver2
+
+User: barney
+
+Password: bedrock
+
+NOTE: <db> is the database in the examples below and is optional. The leading slash '/' is required.
+
+WARNING: When using 'beeline' and specifying the connection url (-u) at the command line, be sure to quote the url.
+
+Non-Secure Environments
+Direct - Binary Transport Mode
+
+beeline -n barney -p bedrock -u "jdbc:hive2://m1.hdp.local:10010/<db>"
+Direct - HTTP Transport Mode
+
+beeline -n barney -p bedrock -u "jdbc:hive2://m1.hdp.local:10011/<db>;transportMode=http;httpPath=cliservice"
+ZooKeeper - Binary Transport Mode
+
+beeline -n barney -p bedrock -u "jdbc:hive2://m1.hdp.local:2181,m2.hdp.local:2181,m3.hdp.local:2181/<db>"
+ZooKeeper - Http Transport Mode
+
+beeline -n barney -p bedrock -u "jdbc:hive2://m1.hdp.local:2181,m2.hdp.local:2181,m3.hdp.local:2181/<db>;transportMode=http;httpPath=cliservice"
+Alternate Connectivity
+
+Thru Knox
+
+jdbc:hive2://<knox_host>:8443/;ssl=true;sslTrustStore=/var/lib/knox/data/security/keystores/gateway.jks;trustStorePassword=<password>?hive.server2.transport.mode=http;hive.server2.thrift.http.path=gateway/<CLUSTER>/hive
+Secure Environments
+
+Additional Assumptions
+
+KDC Realm: HDP.LOCAL
+
+HS2 Principal: hive
+
+The 'principal' used in the below examples can use either the fqdn of the HS2 Host in the principal or '_HOST'. '_HOST' is globally replaced based on your Kerberos configuration if you haven't altered the default Kerberos Regex patterns in ...
+
+NOTE: The client is required to 'kinit' before connecting through JDBC. The -n and -p (user / password) aren't necessary. They are handled by the Kerberos Ticket Principal.
+
+Direct - Binary Transport Mode
+
+beeline -u "jdbc:hive2://m1.hdp.local:10010/<db>;principal=hive/_HOST@HDP.LOCAL"
+Direct - HTTP Transport Mode
+
+beeline -u "jdbc:hive2://m1.hdp.local:10011/<db>;principal=hive/_HOST@HDP.LOCAL;transportMode=http;httpPath=cliservice"
+ZooKeeper - Binary Transport Mode
+
+beeline -u "jdbc:hive2://m1.hdp.local:2181,m2.hdp.local:2181,m3.hdp.local:2181/<db>;principal=hive/_HOST@HDP.LOCAL"
+ZooKeeper - Http Transport Mode
+
+beeline -u "jdbc:hive2://m1.hdp.local:2181,m2.hdp.local:2181,m3.hdp.local:2181/<db>;principal=hive/_HOST@HDP.LOCAL;transportMode=http;httpPath=cliservice"
