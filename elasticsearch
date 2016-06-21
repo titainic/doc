@@ -1,3 +1,14 @@
+
+es结合hive
+http://blog.csdn.net/sunflower_cao/article/details/39896189
+https://www.elastic.co/guide/en/elasticsearch/hadoop/current/configuration.html  官网配置选项
+
+在${HIVE_HOME}目录下创建文件夹auxlib,然后将elasticsearch-hadoop.jar文件放入其中，在重启hive服务
+
+
+-------------------------------------------------------------------------
+
+
 https://github.com/NLPchina/elasticsearch-sql
 http://bigbo.github.io/pages/2015/04/10/elasticsearch_config/ es配置说明
 http://my.oschina.net/secisland/blog/618702   缓存
@@ -40,9 +51,6 @@ http://www.cnblogs.com/dennisit/p/4133131.html
 es分片详细讲解
 http://my.oschina.net/secisland/blog/618312
 
-es结合hive
-http://blog.csdn.net/sunflower_cao/article/details/39896189
-https://www.elastic.co/guide/en/elasticsearch/hadoop/current/configuration.html  官网配置选项
 
 es内存设置
 ES_HOME的bin目录下有一个elasticsearch.in.sh文件,修改
