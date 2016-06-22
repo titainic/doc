@@ -158,7 +158,7 @@ export JAVA_HOME=/usr/lib/jdk1.6.0_45
 1）格式化namenode
 
 
-$ bin/hdfs namenode –format
+$ bin/hdfs namenode –format 这个不能用，就用后面这个  hadoop namenode -format
 2）启动NameNode 和 DataNode 守护进程
 
 
