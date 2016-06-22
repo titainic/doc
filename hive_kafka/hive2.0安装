@@ -67,6 +67,21 @@ hive-site.xml
 <name>datanucleus.autoStartMechanism</name>
 <value>SchemaTable</value>
 </property>
+
+<property>
+  <name>hive.metastore.warehouse.dir</name>
+  <value>/user/hive/warehouse</value>
+  <description>metastore 的数据目录</description>
+</property>
+
+<property>
+  <name>hive.metastore.uris</name>
+  <value>thrift://127.0.0.1:9083</value>
+</property>
+
+<!--Hive metastore start -->
+
+
 </configuration>
 ------------------------------------------------------------------------------------------------
 #启动metastore服务
@@ -74,7 +89,7 @@ hive-site.xml
 Starting Hive Metastore Server
 
 #启动hiveserver服务
-~ bin/hive --service hiveserver &
+~ bin/hive --service hiveserver2 &
 Starting Hive Thrift Server
 
 #启动hive客户端
