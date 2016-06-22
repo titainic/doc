@@ -1,0 +1,88 @@
+ 配置环境变量(如果不是root用户，配置自己的~/.bash_profile即可)：
+
+ vi /etc/profile
+
+ export HIVE_HOME=/home/titanic/soft/hadoop/hive-2.0.0
+
+ export PATH=$HIVE_HOME/bin: $PATH
+
+ source /etc/profile
+ 
+ 安装mysql
+ create database hive;
+grant all on hive.* to hive@'%' identified by 'a';
+grant all on hive.* to hive@localhost identified by 'a';
+
+配置hive-site.xml中jdbc如下
+&amp; 相当于 &
+jdbc:mysql://127.0.0.1:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false
+
+
+hive-site.xml
+内容如下
+----------------------------------------------------------------------------------------
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+<property>
+<name>hive.metastore.warehouse.dir</name>
+<value>/hivedata/warehouse/</value>
+<description>Hive在HDFS上的根目录</description>
+</property>
+<property>
+<name>javax.jdo.option.ConnectionURL</name>
+<value>jdbc:mysql://127.0.0.1:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+<description>Hive元数据库的连接串，红色为数据库名</description>
+</property>
+<property>
+<name>javax.jdo.option.ConnectionDriverName</name>
+<value>com.mysql.jdbc.Driver</value>
+<description>Hive元数据库JDBC驱动</description>
+</property>
+<property>
+<name>javax.jdo.option.ConnectionUserName</name>
+<value>hive</value>
+<description>Hive元数据库用户名</description>
+</property>
+<property>
+<name>javax.jdo.option.ConnectionPassword</name>
+<value>a</value>
+<description>Hive元数据库密码</description>
+</property>
+<property>
+<name>datanucleus.autoCreateTables</name>
+<value>true</value>
+<description>不存在时，自动创建Hive元数据表</description>
+</property>
+<property>
+<name>datanucleus.autoCreateColumns</name>
+<value>true</value>
+<description>不存在时，自动创建Hive元数据列</description>
+</property>
+<property>
+<name>datanucleus.fixedDatastore</name>
+<value>false</value>
+</property>
+<property>
+<name>datanucleus.autoStartMechanism</name>
+<value>SchemaTable</value>
+</property>
+</configuration>
+------------------------------------------------------------------------------------------------
+#启动metastore服务
+~ bin/hive --service metastore &
+Starting Hive Metastore Server
+
+#启动hiveserver服务
+~ bin/hive --service hiveserver &
+Starting Hive Thrift Server
+
+#启动hive客户端
+~ bin/hive shell
+Logging initialized using configuration in file:/root/hive-0.9.0/conf/hive-log4j.properties
+Hive history file=/tmp/root/hive_job_log_root_201211141845_1864939641.txt
+
+hive> show tables
+OK
+
+
