@@ -1,3 +1,6 @@
+
+http://m.blog.itpub.net/30089851/viewspace-2082805/
+
 环境:Apache Hadoop2.7分布式集群环境(HDFS HA,Yarn HA,HBase HA)
 元数据库mysql部署在hadoop-01机器上
 user:hive
@@ -15,7 +18,8 @@ Query OK, 1 row affected (0.04 sec)
 mysql> create user 'hive' identified by 'hive';
 Query OK, 0 rows affected (0.05 sec)
 
-mysql> grant all privileges on hive_remote_meta.* to 'hive'@'%';
+mysql> grant all privileges on hive_remote_meta.* to 'hive'@'%';  或者GRANT all on *.* to 'hiv'@localhost identified by 'a';
+
 Query OK, 0 rows affected (0.03 sec)
 
 mysql> flush privileges;
