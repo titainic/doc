@@ -102,4 +102,6 @@ Hive history file=/tmp/root/hive_job_log_root_201211141845_1864939641.txt
 hive> show tables
 OK
 
+http://127.0.0.1:10002/hiveserver2.jsp  web页面
+
 
