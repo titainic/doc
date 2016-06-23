@@ -23,12 +23,12 @@ jdbc:mysql://127.0.0.1:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false
 hive-site.xml
 内容如下
 ----------------------------------------------------------------------------------------
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> 
+<?xml-stylesheet type="textl" href="configuration.xsl"?>
 <configuration>
 <property>
 <name>hive.metastore.warehouse.dir</name>
-<value>/hivedata/warehouse/</value>
+<value>hdfs://127.0.0.1:8020/user/hive/warehouse</value>
 <description>Hive在HDFS上的根目录</description>
 </property>
 <property>
@@ -63,29 +63,29 @@ hive-site.xml
 </property>
 <property>
 <name>datanucleus.fixedDatastore</name>
-<value>false</value>
+<value>true</value>
 </property>
 <property>
 <name>datanucleus.autoStartMechanism</name>
 <value>SchemaTable</value>
 </property>
 
-<property>
-  <name>hive.metastore.warehouse.dir</name>
-  <value>/user/hive/warehouse</value>
-  <description>metastore 的数据目录</description>
-</property>
-
-<property>
-  <name>hive.metastore.uris</name>
-  <value>thrift://127.0.0.1:9083</value>
-</property>
+<!--Hive metastore start -->  
+<property>  
+  <name>hive.metastore.uris</name>  
+  <value>thrift://127.0.0.1:9083</value>  
+</property>  
 
 <!--Hive metastore start -->
 
-
+<property>  
+	<name>datanucleus.autoCreateColumns</name>  
+	<value>true</value>
+</property>
+     
 </configuration>
 ------------------------------------------------------------------------------------------------
+启动顺序不能错，要以一下命令的顺序启动
 #启动metastore服务
 ~ bin/hive --service metastore &
 Starting Hive Metastore Server
