@@ -85,6 +85,10 @@ hive-site.xml
      
 </configuration>
 ------------------------------------------------------------------------------------------------
+修改hive日志目录
+修改hive/conf/hive-log4j2.properties
+property.hive.log.dir =/home/titanic/soft/hadoop/hive-2.0.0/logs
+------------------------------------------------------------------------------------------------
 启动顺序不能错，要以一下命令的顺序启动
 #启动metastore服务
 ~ bin/hive --service metastore &
