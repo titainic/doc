@@ -1,0 +1,5 @@
+http://blog.csdn.net/mm_bit/article/details/51193235
+http://blog.csdn.net/ggz631047367/article/details/50527816
+
+zookeeper安装
+http://blog.sina.com.cn/s/blog_4458fdda010164u3.html
