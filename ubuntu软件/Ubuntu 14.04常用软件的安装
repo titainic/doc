@@ -1,0 +1,360 @@
+注意系统发行版本为Ubuntu 14.04
+很多软件大家可能都不知道是干什么用的，请您自己在https://www.google.com里搜索吧。
+PAC Manager（替换SecureCRT）
+官方下载：http://sourceforge.net/projects/pacmanager/files/
+cd ~/Downloads
+sudo dpkg -i pac-*.deb
+sudo apt-get -f install
+sudo dpkg -i pac-*.deb
+支付宝安全控件（For Chrome、Firefox、Opera）
+https://110.alipay.com/sc/aliedit/intro.htm
+SSH服务（开启ubuntu中的ssh服务）
+sudo apt-get install openssh-server
+sudo service ssh start/stop/restart 启动/停止/启动服务
+Cisco Packet Tracer 5.3（思科网络模拟器）
+下载: http://dl.dbank.com/c0xy2o66ob
+chmod +x PacketTracer531_i386_installer-deb.bin
+sudo ./PacketTracer531_i386_installer-deb.bin
+GNS3网络模拟器
+从官方网站下载两个文件（若官方发布了新版本，直接下载新版本即可）：
+①http://www.gns3.net/download
+GNS3 v0.8.3.1 tgz archive
+②http://www.gns3.net/dynamips/
+Dynamips 0.2.8-RC3-community binary for Linux (32-bit)
+Dynamips 0.2.8-RC3-community binary for Linux (64-bit)
+创建个文件夹：
+kashu@ubuntu:~$ mkdir /opt/GNS3/
+解压文件：
+kashu@ubuntu:~/Downloads$ tar -zxf GNS3-0.8.3.1-src.tar.gz
+移动解压的所有文件到GNS3文件夹中：
+kashu@ubuntu:~/Downloads$ mv GNS3-0.8.3.1-src/* /opt/GNS3/
+在GNS3中创建一个Dynamips文件夹：
+kashu@ubuntu:~/Downloads$ mkdir /opt/GNS3/Dynamips/
+把dynamips-0.2.8-RC3-community-x86_64.bin移动到该文件夹内：
+kashu@ubuntu:~/Downloads$ mv ./Dynamips/dynamips-0.2.8-RC3-community-x86_64.bin /opt/GNS3/Dynamips/
+给dynamips-0.2.8-RC3-community-x86_64.bin添加x权限：
+kashu@ubuntu:~/Downloads$ chmod +x /opt/GNS3/Dynamips/dynamips-0.2.8-RC3-community-x86_64.bin
+运行GNS3：
+kashu@ubuntu:~/Downloads$ sudo python /opt/GNS3/gns3
+QQ 2013
+下载：http://www.longene.org/download/WineQQ2013SP6-20140102-Longene.deb
+如果是64位系统，还需安装这个包：sudo apt-get install ia32-libs
+sudo dpkg -i WineQQ2013SP6-20140102-Longene.deb
+壁纸自动更换软件Variety
+sudo add-apt-repository ppa:peterlevi/ppa
+sudo apt-get update
+sudo apt-get install variety
+fcitx（小企鹅输入法，安装五笔拼音输入法、搜狗拼音输入法、谷歌拼音输入法）
+官方网站安装说明：https://fcitx-im.org/wiki/Install_(Ubuntu)
+sudo add-apt-repository ppa:fcitx-team/nightly（推荐）
+or
+sudo add-apt-repository ppa:fcitx-team/stable
+sudo apt-get update
+五笔拼音输入法：sudo apt-get install fcitx-table-wbpy
+搜狗拼音输入法：sudo apt-get install fcitx-sogoupinyin
+谷歌拼音输入法：sudo apt-get install fcitx-googlepinyin
+配置：fcitx-config-gtk3
+preload（自适应预载守护进程）
+sudo apt-get install preload
+Skype for Linux（只有32位的）
+官方下载：http://download.skype.com/linux/skype-ubuntu-precise_4.2.0.13-1_i386.deb
+sudo dpkg -i skype-ubuntu-precise_4.2.0.13-1_i386.deb
+sudo apt-get -f install
+sudo dpkg -i skype-ubuntu-precise_4.2.0.13-1_i386.deb
+Y PPA Manager is a GUI tool to easily add PPAs, search a package in all Launchpad PPAs, remove duplicate PPAs (only works with separate .list files), backup PPAs and other PPA-related tasks. Check out the Launchpad page for a complete features list.
+sudo add-apt-repository ppa:webupd8team/y-ppa-manager
+sudo apt-get update
+sudo apt-get install y-ppa-manager
+微软Silverlight（http://www.kashu.org/1468.html）
+sudo add-apt-repository ppa:pipelight/stable
+sudo apt-get update && sudo apt-get install pipelight-multi
+sudo pipelight-plugin --enable silverlight
+sysv-rc-conf服务管理程序
+sudo apt-get install sysv-rc-conf
+shutter截图工具
+sudo apt-get install shutter
+Diodon剪贴板管理工具
+sudo add-apt-repository ppa:diodon-team/stable
+sudo apt-get update
+sudo apt-get install diodon
+todo-indicator（todo list，百事贴）
+sudo add-apt-repository ppa:nilarimogard/webupd8
+sudo apt-get update
+sudo apt-get install todo-indicator
+使用方法：/usr/bin/todo-indicator .todo.txt &
+Stickynotes（桌面百事贴小程序）
+sudo add-apt-repository ppa:umang/indicator-stickynotes
+sudo apt-get update
+sudo apt-get install indicator-stickynotes
+proxychains（Ubuntu全局代理软件http://www.kashu.org/1457.html）
+安装：sudo apt-get install proxychains
+修改配置文件：sudo vim /etc/proxychains.conf
+将[ProxyList]下的代理服务器信息修改下
+如：socks5 127.0.0.1 7070
+使用示例：proxychains wget www.youtube.com
+NitroShare（Linux/Windows/MAC跨平台文件传输工具）
+sudo add-apt-repository ppa:george-edison55/nitroshare
+sudo apt-get update
+sudo apt-get install nitroshare
+VLC媒体播放器
+sudo add-apt-repository ppa:djcj/vlc-stable
+sudo apt-get update
+sudo apt-get install vlc
+WebEx Player视频播放器（其中的Recorder无法使用）
+安装好Wine后，直接鼠标双击WebEx_Recorder_and_Player.msi此安装程序即可安装，就这么简单。
+然后就可以在Ubuntu中看*.wrf格式的视频了。
+PSP仿真器（http://ppsspp.org/downloads.html）
+sudo add-apt-repository ppa:noobslab/apps
+sudo apt-get update
+sudo apt-get install ppsspp
+startdict（星际译王）
+sudo apt-get install stardict
+离线词库下载地址：http://abloz.com/huzheng/stardict-dic/zh_CN/
+如：下载一个oxford-gb dictionary(en – zh_CN) 牛津现代英汉双解词典
+然后把它全部解压出来的内容直接移动到/usr/share/stardict/dic目录里即可
+chromium浏览器
+sudo apt-get install chromium-browser
+Adobe Flash Player插件
+sudo apt-get install flashplugin-installer
+Wine稳定版
+export WINEPREFIX=$HOME/wine32
+export WINEARCH=win32
+我还把这两个变量写入到.bashrc文件中了，让它们永久生效
+echo ‘export WINEPREFIX=$HOME/wine32′ >> ~/.bashrc
+echo ‘export WINEARCH=win32′ >> ~/.bashrc
+sudo add-apt-repository ppa:ubuntu-wine/ppa
+sudo apt-get update && sudo apt-get install wine1.6.2
+Adobe Reader（PDF阅读器）
+sudo apt-add-repository “deb http://archive.canonical.com/ $(lsb_release -sc) partner”
+sudo apt-get update
+sudo apt-get install acroread
+htop（交互式进程查看器）
+sudo apt-get install htop
+TLP（Linux高级电源管理工具，建议笔记本装上）
+官方说明：http://linrunner.de/en/tlp/docs/tlp-linux-advanced-power-management.html
+sudo add-apt-repository ppa:linrunner/tlp
+sudo apt-get update
+sudo apt-get install tlp tlp-rdw
+说明
+tlp (PPA) – Power saving
+tlp-rdw (PPA) – optional, Radio Device Wizard
+tp-smapi-dkms (universe) – optional ThinkPad only, tp-smapi is needed for battery charge thresholds and ThinkPad specific status output of tlp-stat
+acpi-call-tools (PPA) – optional ThinkPad only, acpi-call is needed for battery charge thresholds on Sandy Bridge and newer models (X220/T420, X230/T430 et al.)
+联想的ThinkPad把这两个也一并安装上：sudo apt-get install tp-smapi-dkms acpi-call-tools
+安装完后重启生效，要立即生效可执行：sudo tlp start
+Audacious音乐播放器，推荐
+sudo apt-get install audacious
+pdf2htmlEX:（高保真PDF转HTML工具）
+sudo add-apt-repository ppa:coolwanglu/pdf2htmlex && sudo apt-get update && sudo apt-get install pdf2htmlEX
+Google Earth（谷歌地球）
+Download: http://www.google.com/intl/en/earth/download/ge/agree.html
+sudo dpkg -i google-earth-stable_current_amd64.deb
+sudo apt-get -f install（若执行上面的安装后提示有依赖包要装，就执行此命令安装即可）
+sudo dpkg -i google-earth-stable_current_amd64.deb（若执行了上面那条命令，需重新执行此安装命令）
+Openshot（视频编辑器，推荐）
+sudo apt-get install openshot
+The Lastest Version: https://launchpad.net/openshot/+download
+以下是官方的安装方法（http://www.openshot.org/ppa/）
+sudo add-apt-repository ppa:openshot.developers/ppa
+sudo apt-get update
+sudo apt-get install openshot openshot-doc
+ocenaudio（音频编辑器，推荐）
+https://launchpad.net/~trebelnik-stefina/+archive/ocenaudio
+http://www.ocenaudio.com.br/download
+酷我音乐盒，推荐
+https://github.com/LiuLang/kwplayer-packages
+sudo apt-get install kwplayer_3.2.7-1_all.deb
+虾米电台
+sudo add-apt-repository ppa:timxx/xmradio
+sudo apt-get update
+sudo apt-get install xmradio
+Liferea（RSS新闻阅读器）
+apt-get install liferea
+或者（官网http://lzone.de/liferea/install.htm）
+add-apt-repository ppa:liferea/development
+apt-get update
+apt-get install liferea
+add-apt-repository（用不了add-apt-repository这个命令就安装下面那个）
+apt-get install python-software-properties
+weather-indicator（天气预报指示器）
+sudo apt-get install indicator-weather
+or（推荐用下面那个天气预报小工具）
+sudo add-apt-repository ppa:atareao/atareao
+sudo apt-get update
+sudo apt-get install my-weather-indicator
+indicator-multiload（系统负载指示器）
+sudo apt-get install indicator-multiload
+Psensor（硬件温度指示器）
+sudo apt-get install lm-sensors hddtemp psensor
+Caffeine（看视频时防止屏保和sleep）
+sudo add-apt-repository ppa:caffeine-developers/ppa
+sudo apt-get update
+sudo apt-get install caffeine
+indicator-brightness（屏幕亮度指示器）
+sudo add-apt-repository ppa:noobslab/indicators
+sudo apt-get update
+sudo apt-get install indicator-brightness
+apt-fast（代替apt-get，提升软件下载速度，推荐）
+官方主页： https://github.com/ilikenwf/apt-fast
+For those of you who want to manually install it, download it and perform the following:
+cp apt-fast /usr/bin/
+chmod +x /usr/bin/apt-fast
+cp apt-fast.conf /etc
+You need to have aria2c installed:
+apt-get install aria2
+Then, you should be ready to use it - simply run apt-fast instead of apt-get or aptitude any time you find yourself needing to manage packages!
+sudo add-apt-repository ppa:apt-fast/stable && sudo apt-get update && sudo apt-get install apt-fast
+Ubuntu-Tweak
+sudo add-apt-repository ppa:tualatrix/ppa 
+sudo apt-get update
+sudo apt-get install ubuntu-tweak
+ubuntu-restricted-extras（强推）
+sudo apt-get install ubuntu-restricted-extras
+sudo apt-get install libdvdread4
+sudo /usr/share/doc/libdvdread4/install-css.sh
+wavemon（无线信号检测软件，推荐）
+sudo apt-get install wavemon
+Nessus（强悍的远程漏洞扫描器）
+详见：http://www.kashu.org/1254.html
+SimpleScreenRecorder屏幕录像软件，推荐
+sudo add-apt-repository ppa:maarten-baert/simplescreenrecorder
+sudo apt-get update
+sudo apt-get install simplescreenrecorder
+png和jpg图片压缩工具（安装了这个，下面那个optipng就省了）
+sudo apt-get install trimage
+optipng（png图片专用压缩利器）
+sudo apt-get install optipng
+QWinFF（QWinFF is a GUI for FFmpeg）
+sudo apt-add-repository ppa:lzh9102/qwinff
+sudo apt-add-repository ppa:jon-severinsson/ffmpeg
+sudo apt-get update
+sudo apt-get install qwinff
+FF Multi Converter（多功能文件转换器https://sites.google.com/site/ffmulticonverter/download）
+sudo add-apt-repository ppa:ffmulticonverter/stable
+sudo apt-get update
+sudo apt-get install ffmulticonverter
+meld（图形化的diff和文件合并工具）
+sudo apt-get install meld
+VLC（多媒体播放器）
+sudo add-apt-repository ppa:n-muench/vlc2
+sudo apt-get update
+sudo apt-get install vlc
+Wireshark（著名的协议分析仪）
+sudo add-apt-repository ppa:dreibh/ppa
+sudo apt-get update
+sudo apt-get install wireshark
+XBMC（媒体中心）
+sudo add-apt-repository ppa:team-xbmc/ppa
+sudo apt-get update
+sudo apt-get install xbmc
+uGet（文件下载器，堪比迅雷）
+sudo add-apt-repository ppa:plushuang-tw/uget-stable
+sudo apt-get update
+sudo apt-get install uget aria2
+配置参数：--enable-rpc=true -D --check-certificate=false --disable-ipv6=true
+Dconf-Editor
+sudo apt-get install dconf-tools
+7z压缩工具
+sudo apt-get install p7zip-full
+GIMP 2.8.10稳定版good
+sudo add-apt-repository ppa:otto-kesselgulasch/gimp
+sudo apt-get update && sudo apt-get install gimp
+conky
+sudo apt-get install conky
+iftop（监控流量）
+sudo apt-get install iftop
+nethogs（监控流量）
+sudo apt-get install nethogs
+UNetbootin（制作GNU/Linux启动U盘）
+sudo add-apt-repository ppa:gezakovacs/ppa
+sudo apt-get update
+sudo apt-get install unetbootin
+Logout Session
+sudo add-apt-repository ppa:upubuntu-com/apps 
+sudo apt-get update 
+sudo apt-get install logout-session
+XAMPP
+官方下载：http://sourceforge.net/projects/xampp/files/XAMPP Linux/
+把软件移动到/opt目录里：sudo mv ./sudo mv xampp-linux-x64-1.8.3-1-installer.run /opt
+添加可执行权限：sudo chmod +700 xampp-linux-x64-1.8.3-1-installer.run
+安装：sudo ./xampp-linux-x64-1.8.3-1-installer.run
+Master PDF Editor（Linux中的PDF编辑器、阅读器）
+1、官方下载：http://code-industry.net/free-pdf-editor.php
+2、tar -zxf 解压
+3、使用：kashu@kashu:/opt/MasterPDFEditor$ ./pdfeditor
+krop（PDF裁剪工具）
+官方下载：http://arminstraub.com/computer/krop#downloadkrop
+sudo dpkg -i krop_0.4.5-1_all.deb
+sudo apt-get -f install && sudo dpkg -i krop_0.4.5-1_all.deb
+plink（ssh跳墙时使用）
+sudo apt-get install plink
+使用示例：plink -C -D 127.0.0.1:43210 -N -pw 12345 kashu@8.8.8.8
+包含了很多最新版的安全工具：aircrack-ng、hydra 7.6-1、nmap 6.46-1、wireshark 1.10.6等等
+官方链接：https://launchpad.net/~pi-rho/+archive/security
+sudo add-apt-repository ppa:pi-rho/security
+sudo apt-get update
+sudo apt-get install nmap
+NMAP（安装最新版NMAP）
+shell脚本如下，直接在Ubuntu系统中运行此脚本就能自动安装好最新版的NMAP：
+http://www.kashu.org/1013.html
+mupdf（轻量级XPS和PDF文档阅读器）
+sudo apt-get install mupdf
+需要使用命令行启用该软件，使用示例：mupdf kashu.xps 或 mupdf kashu.pdf
+chmsee（chm格式文件阅读器，chm viewer）
+sudo apt-get install chmsee
+TeamViewer
+官方下载：https://www.teamviewer.com/en/download/linux.aspx
+安装：sudo dpkg -i teamviewer_linux_x64.deb
+如果提示有依赖包要安装，直接运行sudo apt-get -f install
+最后再执行一次安装即可：sudo dpkg -i teamviewer_linux_x64.deb
+VMware Workstation
+安装方法（包含下载、安装、激活、序列号）
+http://www.kashu.org/1024.html
+VirtualBox
+官方下载及安装方法
+https://www.virtualbox.org/wiki/Linux_Downloads
+XMind（思维导图）
+官方下载：http://www.xmind.net/download/linux/
+sudo dpkg -i xmind-linux-3.4.0.201311050558_amd64.deb
+sudo apt-get -f install
+sudo dpkg -i xmind-linux-3.4.0.201311050558_amd64.deb
+HandBrake（视频转码器）
+把软件源加入到/etc/apt/sources.list文件中，然后sudo apt-get update &
+sudo vim /etc/apt/sources.list
+deb http://ppa.launchpad.net/stebbins/handbrake-releases/ubuntu precise main 
+deb-src http://ppa.launchpad.net/stebbins/handbrake-releases/ubuntu precise main
+其它操作系统：
+http://handbrake.fr/downloads.php
+其它Ubuntu发行版：
+https://launchpad.net/~stebbins/+archive/handbrake-releases
+I-Nex（类似于Windows下的CPU-Z）
+sudo add-apt-repository ppa:i-nex-development-team/stable
+sudo add-apt-repository ppa:nemh/gambas3
+sudo apt-get update
+sudo apt-get install i-nex
+Audio Recorder（录音软件）
+To install Audio-Recorder in Ubuntu/Linux Mint open Terminal (Press Ctrl+Alt+T) and copy the following commands in the Terminal:
+sudo add-apt-repository ppa:osmoma/audio-recorder
+sudo apt-get update
+sudo apt-get install audio-recorder
+Install additional codecs with this command:
+sudo apt-get install gstreamer0.10-plugins-ugly gstreamer0.10-plugins-bad
+prelink（通过预链接，减少软件启动时检测、链接的时间，从而加快软件启动速度）
+sudo apt-get install prelink
+以管理员身份编辑/etc/default/prelink，将其中的PRELINKING=unknown 改为 PRELINKING=yes。
+在终端中运行如下命令，初始化Prelink数据库：sudo /etc/cron.daily/prelink
+该过程需要数分钟的时间，作用相当于建立“缓存”，预先为各个软件链接好启动所需的共享库，使得以后每次启动软件不必再临时链接。
+BleachBit（Linux下的清道夫，本人更推荐使用Ubuntu Tweak里janitor所提供的清理功能）
+sudo apt-get install bleachbit
+XnConvert:跨平台图片批处理专家，推荐
+http://www.xnview.com/en/xnconvert/
+sudo dpkg -i XnConvert-linux-x64.deb
+phatch（批量图片处理工具，很强）
+sudo apt-get install phatch
+E4rat
+专为加速Linux启动时间设置的工具。通过对物理文件分配，借此减小旋转迟延，增大磁盘交换速率，借此加速开机启动时间。 E4rat只为Ext4格式设计，对其他文件系统不起作用。您在使用时，注意保护敏感数据，避免以外发生。
+安装方法：http://www.kashu.org/1214.html
+cheese（要用webcam就装这个）
+sudo apt-get install cheese
+显示Ubuntu所有自启动应用程序（在startup里面默认是隐藏的）
+sudo sed -i 's/NoDisplay=true/NoDisplay=false/g' /etc/xdg/autostart/*.desktop
