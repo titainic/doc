@@ -1,0 +1,65 @@
+http://blog.cheyo.net/82.html
+
+安装
+
+说明
+
+本文档将Sqoop2 Server安装在data03节点上，client装在ctrl节点上。
+
+下载
+
+1
+2
+3
+4
+cd /opt
+wget http://apache.fayea.com/sqoop/1.99.6/sqoop-1.99.6-bin-hadoop200.tar.gz
+tar -xvf sqoop-1.99.6-bin-hadoop200.tar.gz
+ln -s sqoop-1.99.6-bin-hadoop200 sqoop
+配置环境变量
+
+
+vim /etc/bashrc
+export SQOOP_HOME=/opt/sqoop
+export PATH=$PATH:$SQOOP_HOME/bin
+export CATALINA_BASE=$SQOOP_HOME/server
+export LOGDIR=$SQOOP_HOME/logs/
+
+修改sqoop配置
+vi server/conf/sqoop.properties
+org.apache.sqoop.submission.engine.mapreduce.configuration.directory=/opt/hadoop/etc/hadoop/
+修改sqoop读取hadoop的jar包的路径
+
+vi /sqoop/server/conf/catalina.properties 将common.loader行后的/usr/lib/hadoop/lib/*.jar改成自己的hadoop jar包:
+
+/opt/hadoop/share/hadoop/common/*.jar,
+/opt/hadoop/share/hadoop/common/lib/*.jar,
+/opt/hadoop/share/hadoop/hdfs/*.jar,
+/opt/hadoop/share/hadoop/hdfs/lib/*.jar,
+/opt/hadoop/share/hadoop/mapreduce/*.jar,
+/opt/hadoop/share/hadoop/mapreduce/lib/*.jar,
+/opt/hadoop/share/hadoop/tools/*.jar,
+/opt/hadoop/share/hadoop/tools/lib/*.jar,
+/opt/hadoop/share/hadoop/yarn/*.jar,
+/opt/hadoop/share/hadoop/yarn/lib/*.jar
+注意：各个jar用逗号分隔，中间不能带空格。
+准备MySQL
+
+将mysql-connector-java-5.1.22-bin.jar拷贝到/opt/sqoop/server/lib下
+
+使用
+
+服务器端
+
+验证安装结果
+# bin/sqoop2-tool verify
+启动SQOOP
+$ bin/sqoop2-server start
+启动后默认监听12000和12001端口。
+停止SQOOP
+# bin/sqoop2-server stop
+客户端连接
+
+# bin/sqoop2-shell
+sqoop:000> set server --host data03 --port 12000 --webapp sqoop
+sqoop:000> show version --all
