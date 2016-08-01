@@ -1,0 +1,26 @@
+开始在整合hive和hbase的时候老是报错，错误大概就是分两类： 
+1，code=1. 
+2，code=2. 
+在网上找了好多资料，发现原来是hive2.0以下的版本，会出现兼容问题，所以将hive版本更新到2.0就能解决以上问题。 
+一，首先hbase没有表的情况下，可以在hive的密令行写： 
+CREATE TABLE hbase_table_1(key int, value string) 
+STORED BY ‘org.apache.Hadoop.hive.hbase.HBaseStorageHandler’ 
+WITH SERDEPROPERTIES (“hbase.columns.mapping” = “info:name”) 
+TBLPROPERTIES (“hbase.table.name” = “hivetest001”); 
+hbase.table.name 定义在hbase的table名称 
+hbase.columns.mapping 定义在hbase的列族
+
+这样就会在hbase里自动建好hivetest001这个表，当hive 中hbase_table_1中有数据插入,关联的hbase中的表hivetest001也会同步数据。
+
+不过先要做个中间表将数据导入，然后才能通过查询中间表，将数据插入关联表。 
+load data local inpath ‘/home/hadoop/kk.txt’ into table hbasetest001；
+
+INSERT OVERWRITE TABLE hbase_table_1 SELECT * FROM hbasetest001;
+
+二，hbase中已经存在表了，可以使用下面的语法：
+
+ CREATE EXTERNAL TABLE hbase_table_2(key int, value string)  
+ STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'  
+ WITH SERDEPROPERTIES ("hbase.columns.mapping" = "cf1:val")  
+ TBLPROPERTIES("hbase.table.name" = "some_existing_table");
+其它基本相同。
