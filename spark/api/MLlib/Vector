@@ -1,0 +1,60 @@
+MLlib定义了Vector接口，最终由DenseVector，SparseVector实现稀疏向量和密集向量
+Vector接口的主要方法有：toArray，向量转换成数组，toBreeze，向量转换成Breeze向量
+toSparse转换成稀疏向量，toDense转换成密集向量，copy向量复制
+
+public interface Vector
+
+double	apply(int i)
+        Gets the value of the ith element.
+-------------------------------------------------------
+int     argmax()
+        Find the index of a maximal element.
+-------------------------------------------------------
+Vector	compressed()
+        Returns a vector in either dense or sparse format, whichever uses less storage.
+-------------------------------------------------------
+Vector	copy()
+        复制向量
+        Makes a deep copy of this vector.
+-------------------------------------------------------
+boolean	equals(java.lang.Object other)
+-------------------------------------------------------
+void	foreachActive(scala.Function2<java.lang.Object,java.lang.Object,scala.runtime.BoxedUnit> f)
+        对每个元素执行函数f
+        参数f包括两个参数的函数，第一个参数为向量的索引位置，Int类型
+        第二个参数为对应位置的值，Double类型
+        Applies a function f to all the active elements of dense and sparse vector.
+-------------------------------------------------------
+int	    hashCode()
+        返回一个向量的哈希值
+        Returns a hash code value for the vector.
+-------------------------------------------------------
+int	    numActives()
+        Number of active entries.
+-------------------------------------------------------
+int	    numNonzeros()
+        非零元素的数目
+        Number of nonzero elements.
+-------------------------------------------------------
+int	    size()
+        Size of the vector.
+-------------------------------------------------------
+double[]	toArray()
+            向量转换成数组
+            Converts the instance to a double array.
+-------------------------------------------------------
+breeze.linalg.Vector<java.lang.Object>	toBreeze()
+                                        Converts the instance to a breeze vector.
+-------------------------------------------------------
+DenseVector	toDense()
+            密集向量
+            Converts this vector to a dense vector.
+-------------------------------------------------------
+java.lang.String	toJson()
+                    json？
+                    Converts the vector to a JSON string.
+-------------------------------------------------------
+SparseVector	toSparse()
+                稀疏向量
+                Converts this vector to a sparse vector with all explicit zeros removed.
+-------------------------------------------------------
