@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?> 
+<?xml-stylesheet type="textl" href="configuration.xsl"?>
+<configuration>
+<property>
+<name>hive.metastore.warehouse.dir</name>
+<value>hdfs://127.0.0.1:8020/user/hive/warehouse</value>
+<description>Hive在HDFS上的根目录</description>
+</property>
+<property>
+<name>javax.jdo.option.ConnectionURL</name>
+<value>jdbc:mysql://127.0.0.1:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+<description>Hive元数据库的连接串，红色为数据库名</description>
+</property>
+<property>
+<name>javax.jdo.option.ConnectionDriverName</name>
+<value>com.mysql.jdbc.Driver</value>
+<description>Hive元数据库JDBC驱动</description>
+</property>
+<property>
+<name>javax.jdo.option.ConnectionUserName</name>
+<value>hive</value>
+<description>Hive元数据库用户名</description>
+</property>
+<property>
+<name>javax.jdo.option.ConnectionPassword</name>
+<value>a</value>
+<description>Hive元数据库密码</description>
+</property>
+<property>
+<name>datanucleus.autoCreateTables</name>
+<value>true</value>
+<description>不存在时，自动创建Hive元数据表</description>
+</property>
+<property>
+<name>datanucleus.autoCreateColumns</name>
+<value>true</value>
+<description>不存在时，自动创建Hive元数据列</description>
+</property>
+<property>
+<name>datanucleus.fixedDatastore</name>
+<value>true</value>
+</property>
+<property>
+<name>datanucleus.autoStartMechanism</name>
+<value>SchemaTable</value>
+</property>
+
+<!--Hive metastore start -->  
+<property>  
+  <name>hive.metastore.uris</name>  
+  <value>thrift://127.0.0.1:9083</value>  
+</property>  
+
+<!--Hive metastore start -->
+
+<property>  
+	<name>datanucleus.autoCreateColumns</name>  
+	<value>true</value>
+</property>
+     
+</configuration>
