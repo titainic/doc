@@ -1,0 +1,256 @@
+hdp安装
+服务器环境配置
+
+1.hosts
+
+   vim /etc/sysconfig/network 修改hostname：
+   　　NETWORKING=yes
+ 　　  HOSTNAME=hadoop-master
+   通过 service network restart 重启网络服务生效。
+   vim /etc/hosts ,修改ip与主机名的对应关系：
+   　　10.10.10.111 hadoop-master
+   　　10.10.10.112 hadoop-node-1
+   　　10.10.10.113 hadoop-node-2
+   　　10.10.10.114 hadoop-node-3
+
+2.防火墙
+
+   关闭防火墙：
+　　　service iptables stop （临时关闭）
+   　　chkconfig iptables off （重启后生效）
+
+3.selinux
+
+   关闭SELINUX
+   　　setenforce 0 （临时生效）
+   　　修改 /etc/selinux/config 下的 SELINUX=disabled （重启后永久生效）
+
+4.ssh
+
+   在主节点/root/.ssh执行 ssh-keygen -t rsa 一路回车，生成无密码的密钥对。
+   将公钥添加到认证文件中： cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys ，并设置authorized_keys的访问权限： chmod 600 ~/.ssh/authorized_keys 。
+   scp文件到所有datenode节点：
+   scp ~/.ssh/authorized_keys root@nodename:~/.ssh/
+   注意：配置后若还需要密码可能是因为selinux没有disabled
+
+5.ulimit数
+
+   打开文件数
+　    ulimit -Sn
+　    ulimit -Hn
+　    如果小于10000，那么修改
+
+　临时
+　　　ulimit -n 10000
+　永久
+　　　vim /etc/security/limits.conf
+　　　* soft nofile 65535
+　　　* hard nofile 65535
+
+6.安装jdk
+
+   wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" 　http://download.oracle.com/otn-pub/java/jdk/8u65-b17/jdk-8u65-linux-x64.tar.gz
+
+   解压到/opt下
+   配置环境变量：vim /etc/profile
+   最后添加：export JAVA_HOME=/opt/jdk1.7.0_79
+   export PATH=$PATH:$JAVA_HOME/bin
+   source /etc/profile
+   java –version 查看是否配置
+
+7.ntp服务
+
+8.关闭PackageKit
+
+   关闭PackageKit（如果安装了的话）
+   vim /etc/yum/pluginconf.d/refresh-packagekit.conf
+   enabled=0
+
+9.设置umask
+
+   检查umask值
+   　　umask
+   设置umask为0022
+   　　umask 0022
+   永久生效
+   　　echo umask 0022 >> /etc/profile
+
+
+
+10.关闭THP
+
+　　关闭 transparent_hugepage透明巨页内存
+　　centos6以上默认启用透明巨页内存，查看目前状态
+　　　　cat /sys/kernel/mm/transparent_hugepage/enabled
+　　　　[always] madvise never
+　　关闭：
+　　　　临时
+　　　　　　echo never >/sys/kernel/mm/transparent_hugepage/enabled
+　　　　永久
+　　　　　　设置/etc/rc.local文件
+　　　　　　vim /etc/rc.local
+　　　　　　添加 transparent_hugepage=never
+
+11.yum-plugin-priorities
+
+    yum install yum-plugin-priorities
+
+
+
+
+    ---------------------------------
+    3.master安装mysql
+
+       安装mysql服务器：yum install mysql-server
+       设置开机启动：chkconfig mysqld on
+       启动mysql：service mysqld start
+       设置密码：mysqladmin -u root password 'mysql'
+
+       mysql -uroot -pmysql 进入mysql命令行：
+
+
+
+    　　GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'youpassword' WITH GRANT OPTION;
+    　　FLUSH PRIVILEGES;
+
+    　　初始化ambari库
+    　　mysql -u root -pmysql
+    　　CREATE USER 'ambari'@'%' IDENTIFIED BY 'ambari';
+    　　GRANT ALL PRIVILEGES ON *.* TO 'ambari'@'%';
+    　　CREATE USER 'ambari'@'localhost' IDENTIFIED BY 'ambari';
+    　　GRANT ALL PRIVILEGES ON *.* TO 'ambari'@'localhost';
+    　　CREATE USER 'ambari'@'hdfs-master' IDENTIFIED BY 'ambari';
+    　　GRANT ALL PRIVILEGES ON *.* TO 'ambari'@'hdfs-master';
+    　　FLUSH PRIVILEGES;
+    　　CREATE DATABASE `ambari` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+    　　初始化hive库
+    　　CREATE USER 'hive'@'%' IDENTIFIED BY 'hive';
+    　　GRANT ALL PRIVILEGES ON *.* TO 'hive'@'%';
+    　　CREATE USER 'hive'@'localhost' IDENTIFIED BY 'hive';
+    　　GRANT ALL PRIVILEGES ON *.* TO 'hive'@'localhost';
+    　　CREATE USER 'hive'@'hdfs-master' IDENTIFIED BY 'hive';
+    　　GRANT ALL PRIVILEGES ON *.* TO 'hive'@'hdfs-master';
+    　　FLUSH PRIVILEGES;
+
+    4.安装ambari
+
+       yum install ambari-server
+
+    5.设置ambari
+
+       ambari-server setup
+
+       下载mysql的JDBC驱动：
+       http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz
+
+       mv mysql-connector-java-5.1.38-bin.jar mysql-connector-java.jar
+
+       ambari库建表：
+       mysql -uroot -ppassword
+       USE ambari;
+       SOURCE /var/lib/ambari-server/resources/Ambari-DDL-MySQL-CREATE.sql;
+
+    6.启动ambari
+
+       ambari-server start
+       ambari-server status
+       ambari-server stop
+       --------------------------------------------------------------
+
+
+
+
+       ---------------------------------------
+       2.2 解压
+
+       解压三个文件到某个目录，最后，目录中有如下
+
+       Shell
+
+       $ ls
+       AMBARI-2.2.1.0
+       ambari-2.2.1.0-ubuntu14.tar.gz
+       down.sh
+       HDP
+       HDP-2.4.0.0-ubuntu14-deb.tar.gz
+       HDP-UTILS-1.1.0.20
+       HDP-UTILS-1.1.0.20-ubuntu14.tar.gz
+       1
+       2
+       3
+       4
+       5
+       6
+       7
+       8
+       $ ls
+       AMBARI-2.2.1.0
+       ambari-2.2.1.0-ubuntu14.tar.gz
+       down.sh
+       HDP
+       HDP-2.4.0.0-ubuntu14-deb.tar.gz
+       HDP-UTILS-1.1.0.20
+       HDP-UTILS-1.1.0.20-ubuntu14.tar.gz
+       2.3 开启http
+
+       在目录下运行http服务，不需要Apache，也不需要Nginx以及他们的各种配置，使用一个命令即可：
+
+       Shell
+
+       $ python -m SimpleHTTPServer
+
+       $ python -m SimpleHTTPServer
+       看提示，已经开启了8000端口，web的根目录就为当前目录。
+
+       2.4 在内网其它机器，添加官方源
+
+       Shell
+
+       wget -nv http://public-repo-1.hortonworks.com/ambari/ubuntu14/2.x/updates/2.2.1.0/ambari.list -O /etc/apt/sources.list.d/ambari.list
+       apt-key adv --recv-keys --keyserver keyserver.ubuntu.com B9733A7A07513CAD
+
+
+       wget -nv http://public-repo-1.hortonworks.com/ambari/ubuntu14/2.x/updates/2.2.1.0/ambari.list -O /etc/apt/sources.list.d/ambari.list
+       apt-key adv --recv-keys --keyserver keyserver.ubuntu.com B9733A7A07513CAD
+       2.5 修改官方源配置文件
+
+       Shell
+
+       #VERSION_NUMBER=2.2.1.0-161
+       #deb http://public-repo-1.hortonworks.com/ambari/ubuntu14/2.x/updates/2.2.1.0 Ambari main
+
+       deb http://1.2.3.4:8000/AMBARI-2.2.1.0/ubuntu14/2.2.1.0-161 Ambari main
+
+       #VERSION_NUMBER=2.2.1.0-161
+       #deb http://public-repo-1.hortonworks.com/ambari/ubuntu14/2.x/updates/2.2.1.0 Ambari main
+
+       deb http://1.2.3.4:8000/AMBARI-2.2.1.0/ubuntu14/2.2.1.0-161 Ambari main
+       其中地址：http://1.2.3.4:8000即是上面的那台开启http的内网机器。后面的目录，可以根据前面下载解压后的目录来修改。
+
+       2.5 更新源并安装程序：
+
+       Shell
+
+       apt-get update
+       apt-get install ambari-server
+
+
+       apt-get update
+       apt-get install ambari-server
+       2.6 配置ambari服务
+
+       Shell
+
+       ambari-server setup
+
+       ambari-server setup
+       其中自定义jdk版本，填写JAVA_HOME的路径为，根据具体的jdk路径来设置，比如：/opt/jdk
+
+       2.7 启动服务
+
+       Shell
+
+       ambari-server start
+
+       ambari-server start
