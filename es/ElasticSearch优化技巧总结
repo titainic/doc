@@ -1,0 +1,260 @@
+http://www.aboutyun.com/forum.php?mod=viewthread&tid=19748
+http://www.aboutyun.com/thread-19782-1-1.html
+http://www.aboutyun.com/forum.php?mod=viewthread&tid=19844
+----------------------------------------------------------------
+集群节点规划
+
+节点职责单一，各司其职
+
+elasticSearch的配置文件中有2个参数：node.master和node.data。这两个参数搭配使用时，能够帮助提供服务器性能。
+[AppleScript] 纯文本查看 复制代码
+
+数据节点node.master: false    node.data: true
+该node服务器只作为一个数据节点，只用于存储索引数据。使该node服务器功能单一，只用于数据存储和数据查询，降低其资源消耗率。
+[AppleScript] 纯文本查看 复制代码
+?
+1
+master节点node.master: true    node.data: false
+该node服务器只作为一个主节点，但不存储任何索引数据。该node服务器将使用自身空闲的资源，来协调各种创建索引请求或者查询请求，讲这些请求合理分发到相关的node服务器上。
+[AppleScript] 纯文本查看 复制代码
+?
+1
+负载均衡节点 node.master: false    node.data: false
+该node服务器即不会被选作主节点，也不会存储任何索引数据。该服务器主要用于查询负载均衡。在查询的时候，通常会涉及到从多个node服务器上查询数据，并请    求分发到多个指定的node服务器，并对各个node服务器返回的结果进行一个汇总处理，最终返回给客户端。
+
+关闭data节点服务器中的http功能
+
+针对ElasticSearch集群中的所有数据节点，不用开启http服务。将其中的配置参数这样设置：http.enabled: false，同时也不要安装head, bigdesk, marvel等监控    插件，这样保证data节点服务器只需处理创建/更新/删除/查询索引数据等操作。
+
+http功能可以在非数据节点服务器上开启，上述相关的监控插件也安装到这些服务器上，用于监控ElasticSearch集群状态等数据信息。
+
+这样做一来出于数据安全考虑，二来出于服务性能考虑。
+
+一台服务器上最好只部署一个Node
+
+一台物理服务器上可以启动多个Node服务器节点（通过设置不同的启动port），但一台服务器上的CPU,内存，硬盘等资源毕竟有限，从服务器性能考虑，不建议一台服务器上启动多个node节点。
+
+在大规模局点,比如100个点，可以专门配备3个Master，可使用3台具有内存的刀片即可，即参数配置为node.master: true，node.data: false；可以按比例配备数据汇聚节点，比如10个，即参数配置为node.master: false ，node.data: false；小规模节点，可以不用如此设置，当然如果依然有性能问题，也是一个优化的措施。
+
+
+机器设置（内存）
+
+预留一半内存给Lucene使用
+
+一个常见的问题是配置堆太大。你有一个64 GB的机器，觉得JVM内存越大越好，想给Elasticsearch所有64 GB的内存。
+
+当然，内存对于Elasticsearch来说绝对是重要的，用于更多的内存数据提供更快的操作。而且还有一个内存消耗大户-Lucene。
+
+Lucene的设计目的是把底层OS里的数据缓存到内存中。Lucene的段是分别存储到单个文件中的，这些文件都是不会变化的，所以很利于缓存，同时操作系统也会把这些段文件缓存起来，以便更快的访问。
+
+Lucene的性能取决于和OS的交互，如果你把所有的内存都分配给Elasticsearch，不留一点给Lucene，那你的全文检索性能会很差的。
+
+最后标准的建议是把50%的内存给elasticsearch，剩下的50%也不会没有用处的，Lucene会很快吞噬剩下的这部分内存。
+
+32GB限制
+
+给ES的内存配置不是越大越好，建议不能超过32GB，不同jdk版本最大边界值是不同的，对于32位小于32G JVM才采用内存对象指针压缩技术，不然对象指针需要占用很大的内存。
+
+使用如下命令测试最大边界值：
+[AppleScript] 纯文本查看 复制代码
+
+java -Xmx32767m -XX:+PrintFlagsFinal 2> /dev/null | grep UseCompressedOops
+bool UseCompressedOops       = false         {lp64_product}
+java -Xmx32766m -XX:+PrintFlagsFinal 2> /dev/null | grep UseCompressedOops
+bool UseCompressedOops       = true          {lp64_product}
+$ JAVA_HOME=`/usr/libexec/java_home -v 1.8` java -Xmx32766m -XX:+PrintFlagsFinal 2> /dev/null | grep UseCompressedOops
+bool UseCompressedOops   := true
+$ JAVA_HOME=`/usr/libexec/java_home -v 1.8` java -Xmx32767m -XX:+PrintFlagsFinal 2> /dev/null | grep UseCompressedOops
+bool UseCompressedOops   = false
+
+在ES启动日志中最好能够看到压缩对象指针为真。
+heap size [15.8gb], compressed ordinary object pointers [true]
+在java中，所有的对象都分配在堆上，然后有一个指针引用它。指向这些对象的指针大小通常是CPU的字长的大小，不是32bit就是64bit，这取决于你的处理器，指针指向了你的值的精确位置。
+
+对于32位系统，你的内存最大可使用4G。对于64系统可以使用更大的内存。但是64位的指针意味着更大的浪费，因为你的指针本身大了。浪费内存不算，更糟糕的是，更大的指针在主内存和缓存器（例如LLC, L1等）之间移动数据的时候，会占用更多的带宽。
+
+java 使用一个叫内存指针压缩的技术来解决这个问题。它的指针不再表示对象在内存中的精确位置，而是表示偏移量。这意味着32位的指针可以引用40亿个对象，而不是40亿个字节。最终，也就是说堆内存长到32G的物理内存，也可以用32bit的指针表示。
+
+一旦你越过那个神奇的30-32G的边界，指针就会切回普通对象的指针，每个对象的指针都变长了，就会使用更多的CPU内存带宽，也就是说你实际上失去了更多的内存。事实上当内存到达40-50GB的时候，有效内存才相当于使用内存对象指针压缩技术时候的32G内存。
+
+这段描述的意思就是说：即便你有足够的内存，也尽量不要超过32G，因为它浪费了内存，降低了CPU的性能，还要让GC应对大内存。
+
+机器内存大于64GB
+
+你可以考虑一台机器上创建两个或者更多ES节点，而不要部署一个使用32+GB内存的节点。仍然要 坚持50%原则，假设 你有个机器有128G内存，你可以创建两个node，使用32G内存。也就是说64G内存给ES的堆内存，剩下的64G给Lucene。
+
+如果你选择第二种，你需要配置cluster.routing.allocation.same_shard.host:true。这会防止同一个shard的主副本存在同一个物理机上（因为如果存在一个机器上，副本的高可用性就没有了）
+
+swapping是性能的坟墓
+
+这是显而易见的，但是还是有必要说的更清楚一点，内存交换到磁盘对服务器性能来说是致命的。想想看一个内存的操作必须是快速的。
+
+如果内存交换到磁盘上，一个100微秒的操作可能变成10毫秒，再想想那么多10微秒的操作时延累加起来。不难看出swapping对于性能是多么可怕。
+
+最好的办法就是在你的操作系统中完全禁用swapping。这样可以暂时禁用：
+[AppleScript] 纯文本查看 复制代码
+
+sudo swapoff -a
+
+为了永久禁用它，你可能需要修改/etc/fstab文件，这要参考你的操作系统相关文档。
+
+如果完全禁用swap，对你来说是不可行的。你可以降低swappiness 的值，这个值决定操作系统交换内存的频率。这可以预防正常情况下发生交换。但仍允许os在紧急情况下发生交换。对于大部分Linux操作系统，可以在sysctl 中这样配置：
+[AppleScript] 纯文本查看 复制代码
+
+vm.swappiness = 1
+
+备注：swappiness设置为1比设置为0要好，因为在一些内核版本，swappness=0会引发OOM（内存溢出）
+
+最后，如果上面的方法都不能做到，你需要打开配置文件中的mlockall开关，它的作用就是运行JVM锁住内存，禁止OS交换出去。在elasticsearch.yml配置如下：
+[AppleScript] 纯文本查看 复制代码
+
+bootstrap.mlockall: true
+-----------------------------------------------------------
+
+问题导读
+
+
+1.Filter Cache的作用是什么？
+2.Bulk Queue是做什么用的？
+3.Indexing Buffer是用来做什么的？
+
+
+上一篇
+ElasticSearch优化技巧总结
+http://www.aboutyun.com/forum.php?mod=viewthread&tid=19748
+
+
+
+以下分别解读几个我知道的内存消耗大户：
+
+Segment Memory
+Segment不是file吗？segment memory又是什么？前面提到过，一个segment是一个完备的lucene倒排索引，而倒排索引是通过词典(Term Dictionary)到文档列表(Postings List)的映射关系，快速做查询的。由于词典的size会很大，全部装载到heap里不现实，因此Lucene为词典做了一层前缀索引(Term Index)，这个索引在Lucene4.0以后采用的数据结构是FST (Finite StateTransducer)。这种数据结构占用空间很小，Lucene打开索引的时候将其全量装载到内存中，加快磁盘上词典查询速度的同时减少随机磁盘访问次数。
+下面是词典索引和词典主存储之间的一个对应关系图:
+
+说了这么多，要传达的一个意思就是，ES的data node存储数据并非只是耗费磁盘空间的，为了加速数据的访问，每个segment都有会一些索引数据驻留在heap里。因此segment越多，瓜分掉的heap也越多，并且这部分heap是无法被GC掉的！ 理解这点对于监控和管理集群容量很重要，当一个node的segment memory占用过多的时候，就需要考虑删除、归档数据，或者扩容了。
+怎么知道segment memory占用情况呢? CAT API可以给出答案。
+
+查看一个索引所有segment的memory占用情况：
+查看一个node上所有segment占用的memory总和:
+那么有哪些途径减少data node上的segment memory占用呢？总结起来有三种方法：
+
+删除不用的索引。
+关闭索引（文件仍然存在于磁盘，只是释放掉内存）。需要的时候可以重新打开。
+定期对不再更新的索引做optimize (ES2.0以后更改为force merge api)。这Optimze的实质是对segment file强制做合并，可以节省大量的segment memory。
+
+Filter Cache
+Filter cache是用来缓存使用过的filter的结果集的，需要注意的是这个缓存也是常驻heap，无法GC的。默认的10% heap size设置工作得够好了，如果实际使用中heap没什么压力的情况下，才考虑加大这个设置。 
+
+Field Data cache
+对搜索结果做排序或者聚合操作，需要将倒排索引里的数据进行解析，然后进行一次倒排。在有大量排序、数据聚合的应用场景，可以说field data cache是性能和稳定性的杀手。这个过程非常耗费时间，因此ES2.0以前的版本主要依赖这个cache缓存已经计算过的数据，提升性能。但是由于heap空间有限，当遇到用户对海量数据做计算的时候，就很容易导致heap吃紧，集群频繁GC，根本无法完成计算过程。ES2.0以后，正式默认启用Doc Values特性(1.x需要手动更改mapping开启)，将field data在indexing time构建在磁盘上，经过一系列优化，可以达到比之前采用field data cache机制更好的性能。因此需要限制对field data cache的使用，最好是完全不用，可以极大释放heap压力。这里需要注意的是，排序、聚合字段必须为not analyzed。设想如果有一个字段是analyzed过的，排序的实际对象其实是词典，在数据量很大情况下这种情况非常致命。
+
+Bulk Queue
+Bulk Queue是做什么用的？当所有的bulk thread都在忙，无法响应新的bulk request的时候，将request在内存里排列起来，然后慢慢清掉。一般来说，Bulk queue不会消耗很多的heap，但是见过一些用户为了提高bulk的速度，客户端设置了很大的并发量，并且将bulk Queue设置到不可思议的大，比如好几千。这在应对短暂的请求爆发的时候有用，但是如果集群本身索引速度一直跟不上，设置的好几千的queue都满了会是什么状况呢？ 取决于一个bulk的数据量大小，乘上queue的大小，heap很有可能就不够用，内存溢出了。一般来说官方默认的threadpool设置已经能很好的工作了，建议不要随意去“调优”相关的设置，很多时候都是适得其反的效果。
+
+Indexing Buffer
+Indexing Buffer是用来缓存新数据，当其满了或者refresh/flush interval到了，就会以segment file的形式写入到磁盘。这个参数的默认值是10% heap size。根据经验，这个默认值也能够很好的工作，应对很大的索引吞吐量。但有些用户认为这个buffer越大吞吐量越高，因此见过有用户将其设置为40%的。到了极端的情况，写入速度很高的时候，40%都被占用，导致OOM。
+
+Cluster State Buffer
+ES被设计成每个Node都可以响应用户的api请求，因此每个Node的内存里都包含有一份集群状态的拷贝。这个Cluster state包含诸如集群有多少个Node，多少个index，每个index的mapping是什么？有少shard，每个shard的分配情况等等(ES有各类stats api获取这类数据)。在一个规模很大的集群，这个状态信息可能会非常大的，耗用的内存空间就不可忽视了。并且在ES2.0之前的版本，state的更新是由Master Node做完以后全量散播到其他结点的。频繁的状态更新都有可能给heap带来压力。在超大规模集群的情况下，可以考虑分集群并通过tribe node连接做到对用户api的透明，这样可以保证每个集群里的state信息不会膨胀得过大。
+
+超大搜索聚合结果集的fetch
+ES是分布式搜索引擎，搜索和聚合计算除了在各个data node并行计算以外，还需要将结果返回给汇总节点进行汇总和排序后再返回。无论是搜索，还是聚合，如果返回结果的size设置过大，都会给heap造成很大的压力，特别是数据汇聚节点。
+
+文／jacksu在简书（简书作者）
+-------------------------------------
+1.机器如何设置（硬盘、CPU）？
+2.索引过程是什么？
+
+
+
+解决方案：
+
+
+
+机器设置（硬盘、CPU）
+
+硬盘对集群非常重要，特别是建索引多的情况。磁盘是一个服务器最慢的系统，对于写比较重的集群，磁盘很容易成为集群的瓶颈。
+如果可以承担的器SSD盘，最好使用SSD盘。如果使用SSD，最好调整I/O调度算法。RAID0是加快速度的不错方法。
+ES建议机器配置：64G内存 SSD硬盘 RAID0，不要使用NAS。
+
+自动调整存储带宽
+在2.0.0之前，elasticsearch会限制合并速度（merges），默认为20MB/sec。但是这个速率经常是显得太小，导致合并速度落后于索引速度，进而限制了索引速度。
+现在Elasticsearch2.0.0，使用了自动调整合并IO速度方式：如果合并落于索引速度，合并IO速度会逐渐增大，并且随着合并的持续进行会减小。在索引吞吐量小的时候，即使突然来了一个大的合并任务，这种情况也不会吞噬整个节点可用的IO，极小化的降低对正在进行的查询和索引的影响。
+但是对索引请求大的情况下，允许的合并速度会自动调整到跟上索引的速度。
+有了2.0.0这个特性，意味着我们不需要管任何的限制值了，只要用默认的就好了。
+2.0.0之前store throttle 设置值有如下几个，在2.0.0版本已经删除了。
+
+
+[Scala] 纯文本查看 复制代码
+
+indices.store.throttle.type, 
+indices.store.throttle.max_bytes_per_sec, 
+index.store.throttle.type, 
+index.store.throttle.max_bytes_per_sec
+
+
+另外，Recovery/snapshot/restore 仍然是有速度限制的，默认都是20MB/sec。
+
+多个path.data 路径
+如果磁盘空间和IO性能是Elasticsearch的瓶颈的话，使用多个IO设备（通过设置多个path.data路径）存储shards，能够增加总的存储空间和提升IO性能。
+在Elasticsearch2.0之前的版本，也是配置多个path.data路径，但是其相当于RAID 0，每个shards的数据会分布在所有的磁盘上。当一个节点上有一块盘坏了的情况下，该节点上所有的shards都会损坏了。需要恢复该节点上的所有shards。
+在2.0.0版本，把这个实现改成了：每个shards所有的数据只会在一块磁盘上面。这样即使一个节点的一块磁盘损坏了，也只是损失了该磁盘上的shards，其它磁盘上的shards安然无事。只需要恢复该块盘上的shards即可。
+升级到2.0.0版本时，旧版本一个shard分布到所有磁盘上的数据，会拷贝到一块盘上。
+对应这个改变，在设计shards时，如果一个节点有10块磁盘，共3个节点，则shards至少30个，才能分布在30块盘上（即最大限度使用磁盘空间）。
+参考
+https://www.elastic.co/blog/performance-indexing-2.0
+https://www.elastic.co/guide/en/elasticsearch/guide/current/hardware.html
+
+CPU（threadpool）
+线程不是越大越好，一般设置threadpool数为CPU cores的个数
+搜索：int((# of cores * 3) / 2) + 1
+ElastiSearch服务器有多个线程池大小配置。主要有：index，search，suggest，get，bulk，percolate，snapshot，snapshot_data，warmer，refresh。
+在此主要针对index和search进行一个配置调整。index操作包含：创    建/更新/删除索引数据。search操作主要针对用户的各种搜索操作。
+具体配置如下：
+[Scala] 纯文本查看 复制代码
+
+threadpool:
+    index:
+        type: fixed
+        size: 100
+    search:
+        type: fixed
+        size: 1000
+
+
+参考文档
+https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html
+
+
+索引过程
+
+大家可能会遇到索引数据比较慢的过程。其实明白索引的原理就可以有针对性的进行优化。ES索引的过程到相对Lucene的索引过程多了分布式数据的扩展，而这ES主要是用tranlog进行各节点之间的数据平衡。所以从上我可以通过索引的settings进行第一优化：
+“index.translog.flush_threshold_ops”:”10000”
+这两个参数第一是到translog数据达到多少条进行平衡，默认为5000，而这个过程相对而言是比较浪费时间和资源的。所以我们可以将这个值调大一些还是设为-1关闭，进而手动进行translog平衡。第二参数是刷新频率，默认为120s是指索引在生命周期内定时刷新，一但有数据进来能refresh像lucene里面commit,我们知道当数据addDoucment后，还不能检索到要commit之后才能行数据的检索，所以可以将其关闭，在最初索引完后手动refresh一之，然后将索引setting里面的index.refresh_interval参数按需求进行修改，从而可以提高索引过程效率。
+另外的知道ES索引过程中如果有副本存在，数据也会马上同步到副本中去。我个人建议在索引过程中将副本数设为0，待索引完成后将副本数按需量改回来，这样也可以提高索引效率。
+“number_of_replicas”: 0
+其实检索速度快度与索引质量有很大的关系。而索引质量的好坏主要与以下几方面有关：
+
+分片数
+分片数是与检索速度非常相关的的指标，如果分片数过少或过多都会导致检索比较慢。分片数过多会导致检索时打开比较多的文件别外也会导致多台服务器之间通讯。而分片数过少会导致单个分片索引过大，所以检索速度慢。基于索引分片数=数据总量/单分片数的计算公式，在确定分片数之前需要进行单服务单索引单分片的测试，目前我们测试的结果单个分片的内容为10G。
+分片（Shard）：一个索引会分成多个分片存储，分片数量在索引建立后不可更改，推荐【分片数*副本数=集群数量】
+确定分片(shard)的数量和副本(replica)的数量ElasticSearch在创建索引数据时，最好指定相关的shards数量和replicas，  否则会使用服务器中的默认配置参数shards=5，replicas=1。
+因为这两个属性的设置直接影响集群中索引和搜索操作的执行。假设你有足够的机器来持有碎片和副本，那么可以按如下规则设置这两个值：
+     1) 拥有更多的碎片可以提升索引执行能力，并允许通过机器分发一个大型的索引；
+     2) 拥有更多的副本能够提升搜索执行能力以及集群能力。
+  对于一个索引来说，number_of_shards只能设置一次，而number_of_replicas可以使用索引更新设置API在任何时候被增加或者减少。
+这两个配置参数在配置文件的配置如下：
+index.number_of_shards: 5 number_of_replicas: 1
+Elastic官方文档建议：一个Node中一个索引最好不要多于三个shards.配置total_shards_per_node参数，限制每个index每个节点最多分配多少个发片.
+http://www.open-open.com/doc/view/f240d61f8f7745098b4459c2483feb40
+http://wenku.baidu.com/link?url=bwD9mpebmQ28mqPj6Z0P1_A9bgFKnhIss8UrRA_Nsv7oTFuUEa9JgUdr9ynKc8OjWvd0pVLsp3tYZTFaNcxVt30EyFBCvkNflFGjMWcqsRq
+
+副本数
+副本数与索引的稳定性有比较大的关系，如果Node在非正常挂了，经常会导致分片丢失，为了保证这些数据的完整性，可以通过副本来解决这个问题。建议在建完索引后在执行Optimize后，马上将副本数调整过来。
+
+分词
+分词对于索引的影响可大可小，看自己把握。大家或许认为词库越多，分词效果越好，索引质量越好，其实不然。分词有很多算法，大部分基于词表进行分词。也就是说词表的大小决定索引大小。所以分词与索引膨涨率有直接关系。词表不应很多，而对文档相关特征性较强的即可。比如论文的数据进行建索引，分词的词表与论文的特征越相似，词表数量越小，在保证查全查准的情况下，索引的大小可以减少很多。索引大小减少了，那么检索速度也就提高了。
+
+索引段
+索引段即lucene中的segments概念，我们知道ES索引过程中会refresh和tranlog也就是说我们在索引过程中segments number不只一个。而segments number与检索是有直接联系的，segments number越多检索越慢，而将segments numbers 有可能的情况下保证为1，这将可以提高将近一半的检索速度。
+https://www.elastic.co/guide/en/elasticsearch/guide/current/hardware.html
