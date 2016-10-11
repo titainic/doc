@@ -1,0 +1,8 @@
+http://tieba.baidu.com/p/4760148073?qq-pf-to=pcqq.c2c
+
+解决办法，Acer的电脑课参考：
+需手动添加启动。
+BIOS-Security-Select an UEFI file as trusted for executing:
+
+弹出窗口，进入Ubuntu/BOOT/grubx64.efi
+接着添加备用名（显示用的名字，无所谓，这里填了Ubuntu）
