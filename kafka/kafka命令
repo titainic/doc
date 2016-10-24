@@ -6,6 +6,9 @@ http://www.cloudera.com/content/cloudera/en/documentation/cloudera-kafka/latest/
 ------------------------------------------
 查询消费了多少
 kafka-consumer-offset-checker --zookeeper localhost:2181 --topic LBS.WEIXIN --group weixin
+----------------------------------------------
+创建主题          replication-factor，备份数。partitions，分区
+./kafka-topics.sh --create --zookeeper 127.0.0.1:2181 --replication-factor 1 --partitions 1 --topic test
 
 -------------------------------------------------------------------------------------------------------------------
 Maximum Connections per IP Address
