@@ -18,3 +18,9 @@ max.connections.per.id = 200    //cloudera里面设置kafka每个ip能有200个�
 ./kafka-console-producer  --broker-list 192.168.1.127:9092 --topic HJW.T1
  消费数据
 ./kafka-console-consumer --zookeeper 192.168.1.127:2181 --topic HJW.T1 --from-beginning
+--------------------------------------------------------------------------------------------------------
+查看topic列表
+./kafka-topics.sh --list --zookeeper 127.0.0.1:2181
+-------------------------------------------------------------------------------------------------------
+查看topic相信信息
+./kafka-topics.sh --describe --zookeeper localhost:2181 --topic test
