@@ -24,3 +24,10 @@ max.connections.per.id = 200    //cloudera里面设置kafka每个ip能有200个�
 -------------------------------------------------------------------------------------------------------
 查看topic相信信息
 ./kafka-topics.sh --describe --zookeeper localhost:2181 --topic test
+-----------------------------------------------------------------------
+查看consumer消费组，有那些
+./kafka-consumer-groups.sh --list  --zookeeper localhost:2181
+
+查看这消费组，消费了多少数据
+./kafka-consumer-groups.sh --describe  --zookeeper localhost:2181 --group titanic
+
