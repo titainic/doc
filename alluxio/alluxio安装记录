@@ -8,3 +8,5 @@
 
 alluxio-start.sh local
 alluxio-stop.sh all
+
+你可以访问http://localhost:19999查看Alluxio master的运行状态，访问http://localhost:30000查看Alluxio worker的运行状态。
