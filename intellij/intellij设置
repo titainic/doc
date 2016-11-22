@@ -14,6 +14,10 @@ setting->editor-> General->Show quick doc on mouse move
 setting-》editor->appearance->show line number
 setting-》editor->appearance->show method separators　设置方法线
 setting-》editor->file types->igonre files and folders 中添加隐藏的文件类型　.iml  
+setting-》editor->general->Auto Import -> 1 optimize imports on the fly
+                                       -> 2 Add unambiguous imports on the fly
+                                      勾选标注 1 选项，IntelliJ IDEA 将在我们书写代码的时候自动帮我们优化导入的包，比如自动去掉一些没有用到的包。
+                                      勾选标注 2 选项，IntelliJ IDEA 将在我们书写代码的时候自动帮我们导入需要用到的包。但是对于那些同名的包，还是需要手动 Alt + Enter 进行导入的，IntelliJ IDEA 目前还无法智能到替我们做判断。
                               
        
 
