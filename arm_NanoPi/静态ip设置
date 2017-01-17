@@ -1,6 +1,10 @@
 添加：
-sudo vim /etc/network/interfaces
+sudo vim /etc/network/interfaces.d/eth0 
+
+auto eth0 inet dhcp
+allow-hotplug eth0
 iface eth0 inet static
 address 192.168.1.151
 netmask 255.255.255.0
 gateway 192.168.1.1
+hwaddress ether c2:e0:79:fb:fe:28
