@@ -1,3 +1,6 @@
 新建用户为binend
 sudo useradd -r -m -s /bin/bash binend
 sudo passwd binend 
+－－－－－－－－－－－－－－－－－－
+删除用户和用户的目录
+deluser --remove-home binend
