@@ -94,7 +94,7 @@ export JAVA_HOME=/usr/lib/jdk1.6.0_45
 <configuration>
  <property>
     <name>fs.default.name</name>
-    <value>hdfs://localhost:9000</value>
+    <value>hdfs://localhost:8020</value>
     <description>HDFS的URI，文件系统://namenode标识:端口号</description>
 </property>
 
@@ -152,7 +152,7 @@ export JAVA_HOME=/usr/lib/jdk1.6.0_45
 </property>
 <property>
         <name>yarn.resourcemanager.webapp.address</name>
-        <value>${yarn.resourcemanager.hostname}:8099</value>
+        <value>${yarn.resourcemanager.hostname}:8088</value>
 </property>
 </configuration>
 4，Hadoop启动 
