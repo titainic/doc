@@ -1,0 +1,138 @@
+http://blog.csdn.net/u012842205/article/details/52344196
+
+Sqoop2下载安装
+
+1、直接在sqoop官网上下载
+
+选择sqoop2的1.99.7版本即可。我直接下的bin版本，这个版本已经编译好了，直接用。当然你也可以下源代码到本地编译安装，确保有Java环境，因为Sqoop用Java编写的。本文直接用的bin版本：sqoop-1.99.7-bin-hadoop200.tar.gz
+
+2、解压安装包
+
+tar -xzvf sqoop-1.99.7-bin-hadoop200.tar.gz
+
+mv sqoop-1.99.7-bin-hadoop200 sqoop1.99.7
+
+
+3、目录简单说明
+
+bin：可执行脚本，一般使用sqoop都是通过这个目录中的工具调用，是一些shell或batch脚本。
+
+conf：存放配置文件
+
+docs：目前不清楚具体是什么，可能是帮助文档，不过一般使用sqoop不会用到。
+
+server：里面只有一个lib目录，存了很多jar文件，是sqoop2 的server包。
+
+shell：同理，sqoop2的shell包。
+
+tools：同理，sqoop2的工具包。
+
+4、安装
+
+因为已经编译好了，所以安装过程是很简单的，只需要把整个目录放在一个自己喜欢的地方即可。
+
+
+5、配置
+
+这里说说环境需要什么：
+
+（1）Java环境，也就是需要Java JDK，我使用的Java为Oracle的1.8版本，注意建议不使用OpenJDK，以防一些兼容性问题。本例根目录为/usr/lib/jvm/jdk1.8.0_101。
+
+（2）Hadoop环境，我使用的Apache Hadoop2.6版本，根目录为/home/hadoop/hadoop2.6。
+
+配置过程中多参考官网的文档，但就我亲试而言，还是有很多没有说清楚的地方。文档一定选择对应版本的。
+
+（1）配置Hadoop根目录路径
+
+添加一个系统环境变量，HADOOP_HOME，本例中设置为/home/hadoop/hadoop2.6。
+
+无论添加到/etc/profile还是在/etc/profile.d中创建一个脚本导入变量，亦或是在～/.bashrc文件中写，都可以：
+
+[plain]view plain copy print?在CODE上查看代码片派生到我的代码片
+export HADOOP_HOME=/home/hadoop/hadoop2.6  
+注意：配置这个变量主要是让Sqoop能找到以下目录的jar文件和Hadoop配置文件：
+
+$HADOOP_HOME/share/hadoop/common
+
+$HADOOP_HOME/share/hadoop/hdfs
+
+$HADOOP_HOME/share/hadoop/mapreduce
+
+$HADOOP_HOME/share/hadoop/yarn
+
+官网上说名了可以单独对各个组建进行配置，使用以下变量：
+
+$HADOOP_COMMON_HOME, $HADOOP_HDFS_HOME,  $HADOOP_MAPRED_HOME, $HADOOP_YARN_HOME
+
+若$HADOOP_HOME已经配置了，最好不要再配置下面的变量，可能会有些莫名错误。
+
+
+（2）配置Hadoop代理访问
+
+因为sqoop访问Hadoop的MapReduce使用的是代理的方式，必须在Hadoop中配置所接受的proxy用户和组。找到Hadoop的core-site.xml配置文件（本例是$HADOOP_HOME/etc/hadoop/core-site.xml）：
+
+<property>
+  <name>hadoop.proxyuser.$SERVER_USER.hosts</name>
+  <value>*</value>
+</property>
+<property>
+  <name>hadoop.proxyuser.$SERVER_USER.groups</name>
+  <value>*</value>
+</property>
+
+$SERVER_USER是运行Sqoop2 Server的系统用户，本例我使用了hadoop用户运行server，所以将之代替为hadoop。
+注意：保证你的用户id大于1000（可用id命令查看），否则作为系统变量运行时，可能需要其他配置，参照官网。
+
+
+（3）配置Sqoop根目录
+
+这个官方文档没有说明，不过貌似sqoop1文档有这个描述，我也胡乱配置了一个：
+
+[plain]view plain copy print?在CODE上查看代码片派生到我的代码片
+export $SQOOP_HOME=/home/hadoop/sqoop1.99.7  
+
+（4）配置第三方jar引用路径
+
+一般我们使用的数据库驱动包都没有随着Sqoop一起释出，多半是因版权问题，所以将这些包放置在这个第三方组件下。再在配置一个SQOOP_SERVER_EXTRA_LIB系统变量即可，本例指定路径为$SQOOP_HOME/extra
+
+[plain]view plain copy print?在CODE上查看代码片派生到我的代码片
+export SQOOP_SERVER_EXTRA_LIB=$SQOOP_HOME/extra  
+最后把mysql的驱动jar文件复制到这个目录下。
+
+5）Sqoop服务器配置
+
+主要是配置conf目录下的sqoop.properties和sqoop_bootstrap.properties两个文件
+
+sqoop_bootstrap.properties文件配置config支持类，这里一般使用默认值即可：
+
+[html]view plain copy print?在CODE上查看代码片派生到我的代码片
+sqoop.config.provider=org.apache.sqoop.core.PropertiesConfigurationProvider  
+sqoop.properties文件配置比较多，这里按需要配置，我写下我配置的项，其他都使用默认值：
+[plain]view plain copy print?在CODE上查看代码片派生到我的代码片
+org.apache.sqoop.submission.engine.mapreduce.configuration.directory=/home/hadoop/hadoop2.6/etc/hadoop  
+  
+org.apache.sqoop.security.authentication.type=SIMPLE  
+org.apache.sqoop.security.authentication.handler=org.apache.sqoop.security.authentication.SimpleAuthenticationHandler  
+org.apache.sqoop.security.authentication.anonymous=true  
+注意：官方文档上只说了配置上面第一项，mapreduce的配置文件路径，但后来运行出现authentication异常，找到sqoop文档描述security部分，发现sqoop2支持hadoop的simple和kerberos两种验证机制。所以配置了一个simple验证，这个异常才消除。
+
+（6）验证配置是否有效
+
+使用bin中的sqoop2-tool工具进行验证：
+
+[html]view plain copy print?在CODE上查看代码片派生到我的代码片
+bin/sqoop2-tool verify  
+这个工具也可用于软件升级。若没有什么问题，则可以往下走了。
+
+（7）开启服务器
+
+sqoop2的运行模式不再是sqoop1的一个小工具，而加入了服务器，这样只要能访问到mapreduce配置文件及其开发包，sqoop服务器部署在哪里都无所谓，而客户端shell是不需要任何配置的。直接用即可。
+
+开启服务器：
+
+[html]view plain copy print?在CODE上查看代码片派生到我的代码片
+bin/sqoop2-server start  
+这时可以通过JDK中的jps工具查看是否已经正确启动起来，正常情况下会有个SqoopJettyServer的进程，这也可以想象，Sqoop server是基于jetty实现的。
+
+至此，sqoop1.99.7的配置和启动已经完成，下一篇文章将接着讲使用和一些注意事项，并总结。
+
