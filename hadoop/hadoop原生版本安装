@@ -2,7 +2,34 @@ http://www.cnblogs.com/lsq163/p/6102597.html  原生版安装
 http://blog.csdn.net/woshisunxiangfu/article/details/44026207
 http://wlb.wlb.blog.163.com/blog/static/467413201501451724327/
 
+-----------------------------------------------------------------
+http://www.bbsmax.com/A/kPzODKaJxn/
+添加pid设置
 
+一、Hadoop配置
+　　（1）修改hadoop-env.sh 
+修改如下，如果没有下面的设置，可以直接添加：
+export HADOOP_PID_DIR=/ROOT/server/pids_hadoop_hbase
+export HADOOP_SECURE_DN_PID_DIR=/ROOT/server/pids_hadoop_hbase 
+　　上述配置，影响 
+　　NameNode 
+　　DataNode 
+　　SecondaryNameNode 
+　　进程pid存储
+
+2）修改mapred-env.sh
+export HADOOP_MAPRED_PID_DIR=/ROOT/server/pids_hadoop_hbase 
+　　上述配置，影响 
+　　JobHistoryServer 
+　　进程pid存储
+
+3）修改yarn-env.sh 
+修改或者添加（不存在此项配置时），这里面我没有找到pid的环境设置变量，所以就直接添加了
+export YARN_PID_DIR=/ROOT/server/pids_hadoop_hbase 
+　　上述配置，影响 
+　　NodeManager 
+　　ResourceManager 
+　　进程pid存储
 --------------------------------------------------------------------
 一，安装环境 
 硬件：虚拟机 
