@@ -1,6 +1,8 @@
 1.打开my.cnf文件进行修改(这里注意下，MySQL版本是5.5以上的，以下版本应该也通用，具体没有测试过，但在5.5以上的绝对可行)
 
 sudo gedit /etc/mysql/my.cnf
+           /etc/mysql/mysql.conf.d
+
 
 2.在[mysqld]下添加如下代码(对于5.5以上版本，[mysqld]的default字符集设置已经是遗弃的参数，可以使用这几个，具体查看相应版本的手册)
 
