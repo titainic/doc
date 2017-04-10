@@ -1,0 +1,62 @@
+http://www.bbsmax.com/A/pRdBjWyGdn/
+http://blog.csdn.net/kunshan_shenbin/article/details/52953634
+http://blog.csdn.net/m_signals/article/details/53190965
+
+--------------------------------------------------------------------
+create job -f "mysql" -t "hdfs"
+Creating job for links with from name mysql and to name hdfs
+Please fill following values to create new job object
+Name: m_to_h
+
+Database source
+
+Schema name: gyrescat20170330
+Table name: o_domain
+SQL statement: 
+Column names: 
+There are currently 0 values in the list:
+element# 
+Partition column: 
+Partition column nullable: 
+Boundary query: 
+
+Incremental read
+
+Check column: 
+Last value: 
+
+Target configuration
+
+Override null value: 
+Null value: 
+File format: 
+  0 : TEXT_FILE
+  1 : SEQUENCE_FILE
+  2 : PARQUET_FILE
+Choose: 0
+Compression codec: 
+  0 : NONE
+  1 : DEFAULT
+  2 : DEFLATE
+  3 : GZIP
+  4 : BZIP2
+  5 : LZO
+  6 : LZ4
+  7 : SNAPPY
+  8 : CUSTOM
+Choose: 0
+Custom codec: 
+Output directory: /sqoop
+Append mode: 
+
+Throttling resources
+
+Extractors: 1
+Loaders: 1
+
+Classpath configuration
+
+Extra mapper jars: 
+There are currently 0 values in the list:
+element# 
+New job was successfully created with validation status OK  and name m_to_h
