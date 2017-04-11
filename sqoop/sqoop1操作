@@ -12,3 +12,17 @@ stored as TEXTFILE
 
 在hive中加载sqoop1导入到hdfs的数据
 load data inpath 'hdfs://mysql00:8020/o_domain/' into table o_domain
+---------------------------------------------------------------------------
+http://blog.csdn.net/z363115269/article/details/39048589
+
+创建Hive表：
+create table test_load(type STRING,num INT,time STRING)
+partitioned by(name STRING)  //分区
+row format delimited
+fields terminated by ','  //以逗号分隔
+stored as TEXTFILE
+
+导入HDFS文件数据：
+load data inpath 'hdfs://Master:9000/user/test/qar_test'
+into table test_load
+partition (name=‘MH');
