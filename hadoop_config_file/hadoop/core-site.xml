@@ -17,34 +17,41 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
- <property>
-    <name>fs.default.name</name>
-    <value>hdfs://127.0.0.1:8020</value>
-   <description>HDFS的URI，文件系统://namenode标识:端口号</description>
-</property>
+    <property>
+        <name>fs.default.name</name>
+        <value>hdfs://127.0.0.1:8020</value>
+        <description>HDFS的URI，文件系统://namenode标识:端口号</description>
+    </property>
 
 
-<property>
-    <name>hadoop.tmp.dir</name>
-    <value>/home/titanic/soft/hadoop/hadoop-2.6.4/tmp</value>
-    <description>namenode上本地的hadoop临时文件夹</description>
-</property>
-
-<!--alluxio -->
-<property>
-  <name>fs.alluxio.impl</name>
-  <value>alluxio.hadoop.FileSystem</value>
-  <description>The Alluxio FileSystem (Hadoop 1.x and 2.x)</description>
-</property>
-<property>
-  <name>fs.alluxio-ft.impl</name>
-  <value>alluxio.hadoop.FaultTolerantFileSystem</value>
-  <description>The Alluxio FileSystem (Hadoop 1.x and 2.x) with fault tolerant support</description>
-</property>
-<property>
-  <name>fs.AbstractFileSystem.alluxio.impl</name>
-  <value>alluxio.hadoop.AlluxioFileSystem</value>
-  <description>The Alluxio AbstractFileSystem (Hadoop 2.x)</description>
-</property>
-<!--alluxio -->
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/home/titanic/soft/hadoop/hadoop-2.6.4/tmp</value>
+        <description>namenode上本地的hadoop临时文件夹</description>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.root.hosts</name>
+        <value>*</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.root.groups</name>
+        <value>*</value>
+    </property>
+    <!--alluxio -->
+    <!--<property>-->
+    <!--<name>fs.alluxio.impl</name>-->
+    <!--<value>alluxio.hadoop.FileSystem</value>-->
+    <!--<description>The Alluxio FileSystem (Hadoop 1.x and 2.x)</description>-->
+    <!--</property>-->
+    <!--<property>-->
+    <!--<name>fs.alluxio-ft.impl</name>-->
+    <!--<value>alluxio.hadoop.FaultTolerantFileSystem</value>-->
+    <!--<description>The Alluxio FileSystem (Hadoop 1.x and 2.x) with fault tolerant support</description>-->
+    <!--</property>-->
+    <!--<property>-->
+    <!--<name>fs.AbstractFileSystem.alluxio.impl</name>-->
+    <!--<value>alluxio.hadoop.AlluxioFileSystem</value>-->
+    <!--<description>The Alluxio AbstractFileSystem (Hadoop 2.x)</description>-->
+    <!--</property>-->
+    <!--alluxio -->
 </configuration>
