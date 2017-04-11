@@ -131,6 +131,16 @@ export JAVA_HOME=/usr/lib/jdk1.6.0_45
     <value>/root/hadoop/tmp</value>
     <description>namenode上本地的hadoop临时文件夹</description>
 </property>
+<!--sqoop2要使用这个代理-->
+<property>
+  <name>hadoop.proxyuser.root.hosts</name>
+  <value>*</value>
+</property>
+<property>
+  <name>hadoop.proxyuser.root.groups</name>
+  <value>*</value>
+</property>
+
 </configuration>
 4），配置hdfs-site.xml 
 添加如下配置
@@ -167,6 +177,19 @@ export JAVA_HOME=/usr/lib/jdk1.6.0_45
         <name>mapreduce.framework.name</name>
         <value>yarn</value>
 </property>
+<property>
+  <name>mapred.child.java.opts</name>
+  <value>-Xmx2048m</value>
+</property>
+
+<property>
+    <name>mapreduce.jobhistory.address</name>
+    <value>master:10020</value>
+</property>
+<property>
+    <name>mapreduce.jobhistory.webapp.address</name>
+    <value>master:19888</value>
+</property>
 </configuration>
 6），配置yarn-site.xml 
 添加如下配置：
@@ -181,6 +204,34 @@ export JAVA_HOME=/usr/lib/jdk1.6.0_45
         <name>yarn.resourcemanager.webapp.address</name>
         <value>${yarn.resourcemanager.hostname}:8088</value>
 </property>
+<property>
+  <name>yarn.log-aggregation-enable</name>
+  <value>true</value>
+</property>
+<property>
+        <name>yarn.scheduler.maximum-allocation-mb</name>
+        <value>2000</value>
+</property>
+ <property>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>2000</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.resource.cpu-vcores</name>
+        <value>1</value>
+    </property>
+<property>
+    <name>yarn.resourcemanager.address</name>
+    <value>mysql00:8032</value>
+  </property>
+  <property>
+    <name>yarn.resourcemanager.scheduler.address</name>
+    <value>mysql00:8030</value>
+  </property>
+  <property>
+    <name>yarn.resourcemanager.resource-tracker.address</name>
+    <value>mysql00:8031</value>
+  </property>
 </configuration>
 4，Hadoop启动 
 1）格式化namenode
