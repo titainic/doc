@@ -30,6 +30,11 @@ load data inpath 'hdfs://Master:9000/user/test/qar_test'
 into table test_load
 partition (name=‘MH');
 
+set hive.cli.print.header=true; 开启查询列名及行转列显示
+set hive.cli.print.row.to.vertical=true;
+set hive.cli.print.row.to.vertical.num=1;
+
+
 ------------------------------------------------------
 http://blog.csdn.net/myrainblues/article/details/43673129
 create-hive-table
