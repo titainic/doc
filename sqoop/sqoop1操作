@@ -29,3 +29,17 @@ stored as TEXTFILE
 load data inpath 'hdfs://Master:9000/user/test/qar_test'
 into table test_load
 partition (name=‘MH');
+
+------------------------------------------------------
+http://blog.csdn.net/myrainblues/article/details/43673129
+create-hive-table
+生成与关系数据库表的表结构对应的HIVE表
+基础语句：
+sqoop create-hive-table –connect jdbc:mysql://localhost:3306/hive -username root -password 123456 –table TBLS –hive-table h_tbls2
+
+参数	说明
+–hive-home <dir>	Hive的安装目录，可以通过该参数覆盖掉默认的hive目录
+–hive-overwrite	覆盖掉在hive表中已经存在的数据
+–create-hive-table	默认是false,如果目标表已经存在了，那么创建任务会失败
+–hive-table	后面接要创建的hive表
+–table	指定关系数据库表名
