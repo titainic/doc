@@ -222,15 +222,15 @@ export JAVA_HOME=/usr/lib/jdk1.6.0_45
     </property>
 <property>
     <name>yarn.resourcemanager.address</name>
-    <value>mysql00:8032</value>
+    <value>master:8032</value>
   </property>
   <property>
     <name>yarn.resourcemanager.scheduler.address</name>
-    <value>mysql00:8030</value>
+    <value>master:8030</value>
   </property>
   <property>
     <name>yarn.resourcemanager.resource-tracker.address</name>
-    <value>mysql00:8031</value>
+    <value>master:8031</value>
   </property>
 </configuration>
 4，Hadoop启动 
