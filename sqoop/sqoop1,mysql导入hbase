@@ -1,0 +1,6 @@
+步骤1：在hibase中建立表和列族 create 'o_domain', 'info'
+
+第二步，mysql导入hbase
+sqoop import --connect jdbc:mysql://192.9.206.50:3306/sqoop  --username root --password a --table o_domain
+--hbase-create-table --hbase-table o_domain --column-family info  
+--columns id,name,image_url,create_time,is_valid,del_flag,remark,sort --hbase-row-key id  
