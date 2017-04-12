@@ -1,0 +1,11 @@
+
+
+sqoop import --connect jdbc:mysql://192.9.206.50:3306/sqoop --username root --password a  --query 'select id,name,image_url,create_time,is_valid,del_flag,remark,sort from o_domain  where $CONDITIONS' --split-by id   --target-dir /o_domain  --fields-terminated-by 't/005'
+
+
+create table o_domain(id STRING,name STRING,image_url STRING,create_time STRING,is_valid STRING,del_flag STRING,remark STRING,sort STRING)
+row format delimited
+fields terminated by 't/005'
+stored as TEXTFILE
+
+load data inpath 'hdfs://mysql00:8020/o_domain/' into table o_domain
