@@ -22,8 +22,6 @@
         <value>hdfs://127.0.0.1:8020</value>
         <description>HDFS的URI，文件系统://namenode标识:端口号</description>
     </property>
-
-
     <property>
         <name>hadoop.tmp.dir</name>
         <value>/home/titanic/soft/hadoop/hadoop-2.6.4/tmp</value>

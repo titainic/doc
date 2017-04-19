@@ -35,10 +35,17 @@
 		<name>hbase.tmp.dir</name>  
 		<value>/home/titanic/soft/hadoop/hbase-1.2.1/tmp</value>  
 	</property>  
-
-	
-	<property>  
+	<property>
 		<name>hbase.zookeeper.property.dataDir</name>  
 		<value>/home/titanic/soft/hadoop/hbase-1.2.1/zookeeper</value>  
-	</property> 
+	</property>
+	<property>
+		<name>hbase.zookeeper.quorum</name>
+		<value>mysql01,mysql02,mysql03</value>
+	</property>
+	<property>
+		<name>hbase.zookeeper.property.clientPort</name>
+		<value>2181</value>
+	</property>
+
 </configuration>

@@ -25,7 +25,8 @@
     <property>
         <name>yarn.log-aggregation-enable</name>
         <value>true</value>
-    </property> <!-- Site specific YARN configuration properties -->
+    </property>
+    <!-- Site specific YARN configuration properties -->
     <property>
         <name>yarn.scheduler.maximum-allocation-mb</name>
         <value>2000</value>

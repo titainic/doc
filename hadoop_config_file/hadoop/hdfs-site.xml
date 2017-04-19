@@ -17,28 +17,21 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-
 <property>
     <name>dfs.name.dir</name>
     <value>/home/titanic/soft/hadoop/hadoop-2.6.4/hdfs/name</value>
     <description>namenode上存储hdfs名字空间元数据 </description> 
 </property>
-
-
 <property>
     <name>dfs.data.dir</name>
     <value>/home/titanic/soft/hadoop/hadoop-2.6.4/hdfs/data</value>
     <description>datanode上数据块的物理存储位置</description>
 </property>
-
-
 <property>
     <name>dfs.replication</name>
     <value>1</value>
     <description>副本个数，配置默认是3,应小于datanode机器数量</description>
 </property>
-
-
 <!--alluxio -->
 <property>
   <name>fs.alluxio.impl</name>
