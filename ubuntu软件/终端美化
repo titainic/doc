@@ -1,0 +1,36 @@
+http://blog.csdn.net/u011254082/article/details/52725512
+
+
+终端美化
+
+终端美化使用的on-my-zsh
+
+首先先介绍一下什么是zsh，zsh是一款强大的终端软件，既可以作为一个交互式终端，也可以作为脚本解释器，oh-my-zsh是最为流行的zsh配置文件，提供了大量的主题和插件
+
+美化的方法就是将原来的bash用zsh代替，zsh相比bash不仅界面漂亮，历史记录，自定义插件，等等方面都更强
+
+首先安装zsh
+
+sudo apt-get install zsh
+1
+然后安装oh-my-zsh
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+1
+最后使用zsh替换bash
+
+chsh -s `which zsh`
+1
+修改终端主题
+
+通过修改~/.zshrc来进行配置，修改如下
+
+ZSH_THEME="agnoster"
+1
+修改完后重启终端，发现有乱码，这是字体不支持的原因，需要下载Powerline字体
+
+进入 链接（https://github.com/powerline/fonts） clone该仓库，然后运行./install.sh安装字体
+
+然后在终端选择配置文件首选项，选择自定义字体，Ubuntu Mono derivative Powerline
+
+通过在~/.zshrc中添加export DEFAULT_USER=”username”可以隐藏固定的user@hostname信息
