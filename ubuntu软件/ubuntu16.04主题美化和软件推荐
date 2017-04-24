@@ -1,6 +1,15 @@
 http://blog.csdn.net/terence1212/article/details/52270210
 sudo apt-get install unity-tweak-tool
+-----------------------------------------------------------
+numix系列图标非常好看，所以我们来安装它。依次执行以下命令：
 
+sudo add-apt-repository ppa:numix/ppa
+sudo apt-get update
+sudo apt-get install numix-gtk-theme numix-icon-theme-circle
+第三步命令可能运行比较缓慢，如果你有代理的话用proxychains就会很快了。如果想要安装所有numix系列的图标主题壁纸等等，还可以把第三步换成这样：
+
+sudo apt install 'numix-**'
+------------------------------------------------------------------
 执行以下命令安装Flatabulous主题：
 
 sudo add-apt-repository ppa:noobslab/themes
