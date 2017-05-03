@@ -1,3 +1,5 @@
+https://my.oschina.net/Yumikio/blog/741619
+-------------------------------------
 部署KDC
 1.在namenode 安装
 yum install krb5-server
