@@ -34,3 +34,4 @@ ZSH_THEME="agnoster"
 然后在终端选择配置文件首选项，选择自定义字体，Ubuntu Mono derivative Powerline
 
 通过在~/.zshrc中添加export DEFAULT_USER=”username”可以隐藏固定的user@hostname信息
+robbyrussell
