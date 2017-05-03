@@ -1,0 +1,8 @@
+部署KDC
+1.在namenode 安装
+yum install krb5-server
+yum install krb5-devel
+yum install krb5-workstation
+2.在datanode 上安装
+yum install krb5-devel
+yum install krb5-workstation
