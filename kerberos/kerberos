@@ -8,3 +8,8 @@ yum install krb5-workstation
 2.在datanode 上安装
 yum install krb5-devel
 yum install krb5-workstation
+
+3.配置kdc以下3个文件
+/etc/krb5.conf
+/var/kerberos/krb5kdc/kdc.conf
+/var/kerberos/krb5kdc/kadm5.acl
