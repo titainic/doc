@@ -1,3 +1,33 @@
 在Ubuntu14.01下可以直接点击下载的文件进入软件中心进行安装（这里的图是已经安装过的，没有安装过的按照Ubuntu的提示安装）。
 
 接下来就是在终端中输入im-config，这时会出现一个对话框，点击OK，有一个对话框，点击Yes，你会看到下面的对话框。如果上面是fcitx，就不用管，直接关闭；如果不是，就修改上面的ibus为fcitx.点击OK即可。又会出现一个对话框，接着就是OK，最后重启电脑
+
+
+
+Ubuntu16.04安装搜狗输入法，以及解决不能输入中文的办法
+
+系统：Ubuntu16.04
+需要安装程序：sogoupinyin_2.0.0.0078_amd64.deb和gdebi
+
+首先，到搜狗官网下载搜狗输入法安装包，我这里下的是sogoupinyin_2.0.0.0078_amd64.deb
+搜狗官网：http://pinyin.sogou.com/linux/?r=pinyin
+然后，在下载时间，先安装一个工具gdebi；
+按下ctrl+alt+t调出命令终端；
+输入下面两句命令进行安装：
+sudo apt-get update
+sudo apt-get install gdebi
+安装完成后，进入存放搜狗输入法安装包的目录，并执行下面命令进行安装：
+sudo gdebi sogoupinyin_2.0.0.0078_amd64.deb
+命令执行完毕后，重启下系统就可以了。
+我安装的时候过程是很顺利的，没有出现什么问题，如果各位在安装过程中有什么问题的话，可以分享一下问题和解决方法。
+
+
+补充:Ubuntu16.04下搜狗输入法无法输入中文，一直停留在英文状态解决办法
+首先，kill搜狗输入法的相关进程
+killall fcitx 
+killall sogou-qinpanel
+ 
+然后，删除配置文件，重启搜狗
+ubuntu下搜狗的配置文件在 ~/.config下的3个文件夹里：
+SogouPY、SogouPY.users、sogou-qimpanel
+将上面3个文件都删除，然后重启输入法(即打开/usr/share/applications/下面的Fcitx)即可。
