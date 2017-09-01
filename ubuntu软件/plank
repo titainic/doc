@@ -1,0 +1,2 @@
+开机启动
+sudo ln -s /usr/share/applications/plank.desktop /etc/xdg/autostart/
