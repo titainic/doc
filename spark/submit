@@ -1,0 +1,10 @@
+nohup spark-submit \
+ --class com.hunan.spark.RulesOfTheContrastSparkV2  \
+ --master spark:/ky28:7077    \
+ --num-executors 8        \
+ --driver-memory 2g       \
+ --executor-memory 25g     \
+ --executor-cores 4       \
+  /root/soft/submit/hunan-spark-1.jar > /root/soft/submit/spark.log &
+  
+  集群32核cpu，200G内存
