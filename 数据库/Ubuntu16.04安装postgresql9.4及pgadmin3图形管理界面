@@ -1,0 +1,85 @@
+https://www.cnblogs.com/andfly/p/6589488.html
+
+安装前的检查
+首先查看是否已经安装了旧版本：
+
+dpkg -l |grep postgresql
+如果已经安装了某个版本的postgresql，请先卸载。
+
+安装postgresql
+添加postgresql源：
+
+sudo touch /etc/apt/sources.list.d/pgdb.list
+sudo vim /etc/apt/sources.list.d/pgdb.list
+把下面这行数据添加到pgdb.list文件中：
+
+deb https://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main
+执行下面的命令添加postgresql安装包的秘钥：
+
+sudo wget --quiet -O - https://postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - 
+接下来就可以安装了：
+
+sudo apt-get update
+sudo apt-get install postgresql-9.4
+一切顺利的话就可以看下面的安装结果了：
+
+OK，一共安装了五个组件。
+
+创建数据库和角色
+创建数据库和角色之前要启动postgresql服务：
+
+$ service postgresql restart 重启
+$ service postgresql stop  停止
+$ service postgresql start 启动
+ 
+
+接下来我们通过创建一个数据库和对应的角色来了解一下postgresql的基本用法。
+
+先把用户切换到postgres(postgres是在安装postgresql的过程中创建的系统用户，这个用户的角色类似于sqlserver中的sa)：
+
+第一件事是使用\password命令，为postgres用户设置一个密码。
+
+1.  psql
+   2.  \password postgres
+
+ 
+
+sudo -i -u postgres
+创建数据库 testdb：
+
+createdb testdb
+接下来创建角色 testuser，我们通过postgresql的客户端来实现：
+
+psql
+在交互式命令中输入然后回车：
+
+CREATE USER testuser;    // 这个命令创建的role默认具有登录权限
+为 testuser 设置密码：
+
+\password testuser       // 按照提示输入密码
+把数据库 testdb 的所有者设置为 testuser：
+
+ALTER DATABASE testdb OWNER TO testuser;
+使用 \q 命令退出当前postgresql的登录，然后用下面的命令登录新建的数据库：
+
+psql -d testdb -U testuser -h 127.0.0.1 -W
+输入刚才为 testuser 设置的密码：
+
+
+
+我们看到，当前的数据库已经是我们创建的 testdb 了。
+
+ 
+
+ 
+
+安装pgAdmin3图形界面来管理Postgresql
+ 
+
+1) 键入如下命令安装pgAdmin3
+
+ sudo apt-get install pgadmin3
+
+2) 键入如下命令运行pgAdmin3 
+
+ pgadmin3
