@@ -1,6 +1,7 @@
 http://blog.csdn.net/terence1212/article/details/52270210
 sudo apt-get install unity-tweak-tool
 https://www.linuxidc.com/Linux/2018-04/151674.htm   主题图标
+https://www.ubuntupit.com/install-flat-modern-ant-gtk-theme-ubuntu-variants/
 ----------------------------------------------------------------
 sudo add-apt-repository ppa:noobslab/themes
 sudo apt-get update
