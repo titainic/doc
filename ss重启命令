@@ -1,0 +1,3 @@
+ ssserver -c /etc/shadowsocks.json -d start
+ 
+ https://blog.csdn.net/blackfrog_unique/article/details/60320737
