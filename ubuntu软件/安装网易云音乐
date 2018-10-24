@@ -1,1 +1,6 @@
 sudo apt install netease-cloud-music
+
+无法启动
+修改网易云音乐桌面快捷方式,加入sudo
+sudo vim /usr/share/applications/netease-cloud-music.desktop
+修改Exec=netease-cloud-music %U这行为Exec=sudo netease-cloud-music %U,加上sudo,这样点击网易云音乐图标就是以管理员权限启动的了，且不用输入密码。
