@@ -8,10 +8,7 @@ $ sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
 $ sudo apt-get update 
 $ sudo apt-get install indicator-sysmonitor
 --------------------- 
-作者：lynnyq 
-来源：CSDN 
-原文：https://blog.csdn.net/lynnyq/article/details/79048989 
-版权声明：本文为博主原创文章，转载请附上博文链接！
+sudo apt-get install terminator
 ----------------------------------------------------------------
 sudo add-apt-repository ppa:noobslab/themes
 sudo apt-get update
