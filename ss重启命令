@@ -3,6 +3,78 @@
   sudo nohup sslocal -s 149.28.39.53 -k a30986125 -m aes-256-cfb  -p 50197 >/dev/null &
  
  https://blog.csdn.net/blackfrog_unique/article/details/60320737
+ 
+ ubuntu16.04安装ss
+ https://www.polarxiong.com/archives/Ubuntu-16-04%E4%B8%8BShadowsocks%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%AE%89%E8%A3%85%E5%8F%8A%E4%BC%98%E5%8C%96.html
+ 
+ 安装pip
+本教程使用Python 3为载体，因Python 3对应的包管理器pip3并未预装，首先安装pip3：
+
+Bash
+sudo apt install python3-pip
+安装Shadowsocks
+因Shadowsocks作者不再维护pip中的Shadowsocks（定格在了2.8.2），我们使用下面的命令来安装最新版的Shadowsocks：
+
+Bash
+pip3 install https://github.com/shadowsocks/shadowsocks/archive/master.zip
+安装完成后可以使用下面这个命令查看Shadowsocks版本：
+
+Bash
+sudo ssserver --version
+目前会显示“Shadowsocks 3.0.0”。
+
+创建配置文件
+创建Shadowsocks配置文件所在文件夹：
+
+Bash
+sudo mkdir /etc/shadowsocks
+然后创建配置文件：
+
+Bash
+sudo nano /etc/shadowsocks/config.json
+复制粘贴如下内容（注意修改密码“password”）：
+
+JSON
+{
+    "server":"::",
+    "server_port":8388,
+    "local_address": "127.0.0.1",
+    "local_port":1080,
+    "password":"mypassword",
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false
+}
+然后按Ctrl + O保存文件，Ctrl + X退出。
+
+测试Shadowsocks配置
+首先记录下服务器的IP地址
+
+Bash
+ifconfig
+找到IPv4地址（和IPv6地址），如我的ifconfig输出为
+
+eth0      Link encap:Ethernet  HWaddr 46:91:89:4e:c1:52
+          inet addr:138.68.51.55  Bcast:138.68.63.255  Mask:255.255.240.0
+          inet6 addr: fe80::4491:89ff:fe4e:c152/64 Scope:Link
+          inet6 addr: 2604:a880:2:d0::3727:7001/64 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:102667 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:7869 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:151166937 (151.1 MB)  TX bytes:1151476 (1.1 MB)
+所以我的IPv4地址是138.68.51.55，IPv6地址是2604:a880:2:d0::3727:7001。
+
+然后来测试下Shadowsocks能不能正常工作了：
+
+Bash
+ssserver -c /etc/shadowsocks/config.json
+在Shadowsocks客户端添加服务器，如果你使用的是我提供的那个配置文件的话，地址填写你的IPv4地址或IPv6地址，端口号为8388，加密方法为aes-256-cfb，密码为你设置的密码。然后设置客户端使用全局模式，浏览器登录Google试试应该能直接打开了。
+
+这时浏览器登录http://ip138.com/就会显示Shadowsocks服务器的IP啦！
+
+测试完毕，按Ctrl + C关闭Shadowsocks
+ 
 
 
 https://blog.csdn.net/u011370082/article/details/77855323   浏览器插件设置
