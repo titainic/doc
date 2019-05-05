@@ -1,6 +1,10 @@
 http://www.jianshu.com/p/1150aa5a6cec
 https://linuxconfig.org/install-wine-on-ubuntu-18-04-bionic-beaver-linux
 注：我的linux操作系统是ubuntu16.04。
+--------------------------------------------------
+安装 winehq-devel
+https://tecadmin.net/install-wine-on-ubuntu/
+-------------------------------------------------
 
 在ubuntu下，安装wine是非常简单的，仅仅三条命令，wine就安装好了。
 
