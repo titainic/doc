@@ -36,14 +36,14 @@ sudo nano /etc/shadowsocks/config.json
 
 JSON
 {
-    "server":"::",
-    "server_port":8388,
-    "local_address": "127.0.0.1",
-    "local_port":1080,
-    "password":"mypassword",
-    "timeout":300,
-    "method":"aes-256-cfb",
-    "fast_open": false
+	"server": "95.179.251.195",
+	"port_password": {
+		"50196": "a30986125",
+		"50197": "a30986125",
+		"50198": "a30986125"
+	},
+	"timeout": 300,
+	"method": "aes-256-cfb"
 }
 然后按Ctrl + O保存文件，Ctrl + X退出。
 
