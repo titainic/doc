@@ -19,6 +19,10 @@ Bash
 pip3 install https://github.com/shadowsocks/shadowsocks/archive/master.zip
 安装完成后可以使用下面这个命令查看Shadowsocks版本：
 
+sudo apt-get install python3-setuptools
+export LC_ALL=C
+
+
 Bash
 sudo ssserver --version
 目前会显示“Shadowsocks 3.0.0”。
