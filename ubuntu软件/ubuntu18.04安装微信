@@ -1,2 +1,13 @@
 https://github.com/geeeeeeeeek/electronic-wechat/releases
 https://blog.csdn.net/ch593030323/article/details/53571807
+
+创建图标
+[Desktop Entry]
+Name=WeChat
+Exec=/home/tone/Tools/electronic-wechat-linux-x64/electronic-wechat
+Comment=WeChat
+Icon=/home/tone/Tools/electronic-wechat-linux-x64/wechat.png
+Type=Application
+Terminal=false
+Encoding=UTF-8
+Categories=Developer;
