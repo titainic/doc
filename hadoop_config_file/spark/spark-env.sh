@@ -69,4 +69,6 @@ export SPARK_MASTER_IP=titanic-Lenovo
 export SPARK_WORKER_MEMORY=1g
 export SPARK_CLUSTER_URL=spark://titanic-Lenovo:7077
 export SPARK_MASTER_PORT=7077
+export HADOOP_HOME=/home/titanic/soft/hadoop-2.8.5
+export HADOOP_CONF_DIR=/home/titanic/soft/hadoop-2.8.5/etc/hadoop
 export SPARK_CLASSPATH=$SPARK_CLASSPATH:/home/titanic/soft/hadoop/spark-2.0.0-bin-hadoop2.6/lib/elasticsearch-hadoop-2.3.2.jar:/home/titanic/soft/hadoop/hbase-1.2.1/lib/hbase-protocol-1.2.1.jar:/home/titanic/soft/hadoop/hbase-1.2.1/lib/hbase-common-1.2.1.jar:/home/titanic/soft/hadoop/hbase-1.2.1/lib/htrace-core-3.1.0-incubating.jar:/home/titanic/soft/hadoop/hbase-1.2.1/lib/hbase-server-1.2.1.jar:/home/titanic/soft/hadoop/hbase-1.2.1/lib/hbase-client-1.2.1.jar:/home/titanic/soft/hadoop/hive-2.0.0/lib/hive-common-2.0.0.jar:/home/titanic/soft/hadoop/hive-2.0.0/lib/hive-exec-2.0.0.jar:/home/titanic/soft/hadoop/spark-2.0.0-bin-hadoop2.6/lib/hbase-spark-2.0.0-20160316.173537-2.jar:/home/titanic/soft/hadoop/spark-2.0.0-bin-hadoop2.6/lib/alluxio-core-client-1.2.0-jar-with-dependencies.jar:/home/titanic/soft/hadoop/spark-2.0.0-bin-hadoop2.6/lib/mysql-connector-java-5.1.37.jar:$SPARK_CLASSPATH
