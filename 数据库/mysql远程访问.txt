@@ -1,4 +1,4 @@
-.vim /etc/mysql/my.cnf找到
+vim /etc/mysql/mysql.conf.d/mysqld.cnf 找到
 
     bind-address           = 127.0.0.1
 
