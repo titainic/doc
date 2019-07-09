@@ -13,3 +13,6 @@ hive --service hiveserver2 &
 alluxio-start.sh local
 alluxio-stop.sh all
 ./kafka-server-start.sh -daemon ../config/server.properties
+
+
+http://mirror.23media.de/apache/   hadoop所有组件下载服务器
