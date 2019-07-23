@@ -40,7 +40,7 @@ sudo nano /etc/shadowsocks/config.json
 
 JSON
 {
-	"server": "95.179.251.195",
+	"server": "139.180.160.203",
 	"port_password": {
 		"50196": "a30986125",
 		"50197": "a30986125",
