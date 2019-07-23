@@ -1,0 +1,13 @@
+1
+sudo apt install make build-essential
+sudo apt install ruby ruby-dev
+2
+修改环境变量vi /etc/profile添加
+export GEM_HOME=$HOME/gems
+export PATH=$HOME/gems/bin:$PATH
+
+3
+gem install bundler
+
+4
+gem install jekyll
