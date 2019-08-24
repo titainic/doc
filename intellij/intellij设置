@@ -4,7 +4,7 @@ https://wakatime.com/  #wakatime插件安装
 systerm setting -> Reopen last project on startup去掉勾
 
 #提示不去分大小写
-setting->然后，输入：sensitive
+setting->Editor->General->Code Completion->右上方 Match case取消
 将右侧的 case sensitive completion 修改为NONE
 
 #鼠标悬停提示
