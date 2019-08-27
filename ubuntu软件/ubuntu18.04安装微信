@@ -1,6 +1,9 @@
 https://github.com/geeeeeeeeek/electronic-wechat/releases
 https://blog.csdn.net/ch593030323/article/details/53571807
 
+
+进入/usr/share/applications 目录创建 其对应为WeChat.desktop 结尾的文件 
+内容如下
 创建图标
 [Desktop Entry]
 Name=WeChat
