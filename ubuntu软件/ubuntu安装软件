@@ -1,7 +1,7 @@
-sublime-text文本编辑工具
-sudo add-apt-repository ppa:webupd8team/sublime-text-3
-sudo apt-get update 
-sudo apt-get install sublime-text-installer
------------------------------------------------------------------
-Transmission(类似迅雷下载)
-sudo apt-get install transmission
+apt-fast的安装
+
+一个多线程的安装工具，apt-get每次只能下载一个如软件或者更新,apt-fast可以同时进行多个下载，这将大大加快下载速度
+
+sudo add-apt-repository ppa:apt-fast/stable
+apt-get update
+apt-get install apt-fast
