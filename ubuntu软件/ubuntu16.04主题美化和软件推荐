@@ -48,6 +48,14 @@ sudo add-apt-repository ppa:noobslab/icons
 sudo apt-get update
 sudo apt-get install ultra-flat-icons
 -----------------------------------------------------------------
+ubuntu 下面查看cpu 网络 内存占用的小插件
+sudo add-apt-repository ppa:indicator-multiload/stable-daily
+sudo apt-get update
+sudo apt-get install indicator-multiload
+开机自启 
+在/etc/rc.local最后加上一句
+indicator-multiload
+-----------------------------------------------------------------
 安装经典菜单指示器
 sudo add-apt-repository ppa:diesch/testing  
 sudo apt-get update  
