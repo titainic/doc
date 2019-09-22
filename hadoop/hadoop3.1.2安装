@@ -142,6 +142,12 @@ yarn-site.xml
     </property>
 </configuration>
 
+workers文件中添加子节点
+binend02
+binend03
+binend04
+binend05
+
 ----------------------------------------------------------------------
 9.scp分发到各节点相应目录
 
