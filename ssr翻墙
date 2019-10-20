@@ -1,0 +1,33 @@
+bbr-ssr加速
+wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+
+ssr安装脚本
+wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh
+
+
+chmod +x shadowsocksR.sh
+./shadowsocksR.sh 2>&1 | tee shadowsocksR.log
+
+ssr安卓客户端
+https://github.com/shadowsocksr-backup/shadowsocksr-android/releases/
+
+ubuntu安装ssr客户端命令
+sudo apt install git
+git clone https://github.com/xzymoe/gfwlist2privoxy.git
+cd gfwlist2privoxy/
+mv ssr /usr/local/bin
+chmod +x /usr/local/bin/ssr
+ssr install
+
+
+启动
+ssr start
+
+停止
+ssr stop
+
+重启
+ssr restart
+
+卸载
+ssr uninstall
