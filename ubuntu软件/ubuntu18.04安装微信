@@ -1,7 +1,13 @@
 https://github.com/geeeeeeeeek/electronic-wechat/releases
 https://blog.csdn.net/ch593030323/article/details/53571807
 
+------------------------------------------------------------------------------------------
+ubuntu18.04 qq 微信添加到最上方，需要的插件
+sudo apt-get install gnome-shell-extension-top-icons-plus gnome-tweaks
 
+gnome-tweaks打开扩展
+打开TopIconPlus 
+------------------------------------------------------------------------------------------
 进入/usr/share/applications 目录创建 其对应为WeChat.desktop 结尾的文件 
 内容如下
 创建图标
@@ -14,3 +20,6 @@ Type=Application
 Terminal=false
 Encoding=UTF-8
 Categories=Developer;
+------------------------------------------------------
+添加qq图标到plank
+/home/titanic/.local/share/application/Wine QQ.desktop拖入plank
