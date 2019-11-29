@@ -1,0 +1,6 @@
+sudo apt install ubuntu-unity-desktop
+
+
+配置界面选择lightdm 然后ok
+
+重启系统
