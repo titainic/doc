@@ -5,6 +5,10 @@ https://www.ubuntupit.com/install-flat-modern-ant-gtk-theme-ubuntu-variants/
 ----------------------------------------------------------------------------
 sudo add-apt-repository ppa:noobslab/icons2
 sudo apt-get update
+sudo apt-get install uniform-icons
+---------------------------------------------------------------------------
+sudo add-apt-repository ppa:noobslab/icons2
+sudo apt-get update
 sudo apt-get install square-icons
 ----------------------------------------------------------------------
 sudo add-apt-repository ppa:noobslab/icons
