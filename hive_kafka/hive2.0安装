@@ -20,9 +20,7 @@ grant all on hive.* to hive@localhost identified by 'a';
 &amp; 相当于 &
 jdbc:mysql://127.0.0.1:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false
 
-Jar放入${HIVE_HOME}/auxlib目录
-在${HIVE_HOME}中创建文件夹auxlib，然后将自定义jar文件放入该文件夹中。
-此方法添加不需要重启Hive。而且比较便捷。
+mysql驱动Jar放入${HIVE_HOME}/lib目录
 
 
 hive-site.xml
