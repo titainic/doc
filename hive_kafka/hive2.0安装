@@ -2,15 +2,15 @@ http://m.blog.itpub.net/30089851/viewspace-2082805/
 http://www.aboutyun.com/thread-18361-1-1.html
 
  配置环境变量(如果不是root用户，配置自己的~/.bash_profile即可)：
-
  vi /etc/profile
-
  export HIVE_HOME=/home/titanic/soft/hadoop/hive-2.0.0
-
  export PATH=$HIVE_HOME/bin: $PATH
-
  source /etc/profile
- 
+ -------------------------------------------------------------------------------
+ 修改hive-env.sh
+ export JAVA_HOME=/usr/local/jdk1.7.0_80  
+export HADOOP_HOME=/usr/local/hadoop 
+ ---------------------------------------------------------------------------------
  安装mysql
  create database hive;
 grant all on hive.* to hive@'%' identified by 'a';
@@ -93,7 +93,10 @@ hive-site.xml
 修改hive日志目录
 修改hive/conf/hive-log4j2.properties
 property.hive.log.dir =/home/titanic/soft/hadoop/hive-2.0.0/logs
-------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+初始化hive
+.//bin/schematool -dbType mysql -initSchema hive hive
+-------------------------------------------------------------------------------------------------
 启动顺序不能错，要以一下命令的顺序启动
 #启动metastore服务
 ~ bin/hive --service metastore &
