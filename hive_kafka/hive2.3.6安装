@@ -120,11 +120,11 @@ dberver使用jdbc链接hive
 把root换成系统用户titanic
 
 <property>
-    <name>hadoop.proxyuser.root.hosts</name>
+    <name>hadoop.proxyuser.titanic.hosts</name>
     <value>*</value>
 </property>
 <property>
-    <name>hadoop.proxyuser.root.groups</name>
+    <name>hadoop.proxyuser.titanic.groups</name>
     <value>*</value>
 </property>
 
