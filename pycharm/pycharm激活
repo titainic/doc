@@ -1,0 +1,25 @@
+https://www.macdo.cn/25565.html
+
+https://www.macdo.cn/25565.html
+
+
+    点击IDE菜单 Help" -> Register... 或 Configure -> Manage License...
+    选择激活模式，有两种模式，您可以任选一种：
+
+Activation Code 模式
+
+打开包内的激活码.txt，全选复制后粘贴到 Activation Code 下面的输入框中，然后点击Activate，大功告成，有效期至2089年。(您也可以生成专属激活码)。
+License server 模式
+
+Server Address地址填入：http://fls.jetbrains-agent.com 然后点击Activate，支持https。(如果点击出现Please wait...后没有任何变化，那请使用 Activation Code 模式)。
+
+
+异常
+
+    如果激活窗口一直弹出 error 1653219，请去hosts文件里移出 jetbrains 相关的Host条目。
+    License key is in legacy format == Key invalid，表示agent配置未生效。
+
+
+
+以上步骤操作完成后激活就结束了，现在你可以使用 jetbrains-agent + license server 激活jetbrains平台的付费插件了！需要注意的是：IEDIS 2 和 MINBATIS这两个需要使用 IEDIS_MINBATIS_CODE.txt 中的激活码来激活。如果有需要 JetBrains 中文汉化包的可以继续往下看。此方法来自于：zhile.io
+
