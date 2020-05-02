@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Pycharm
+GenericName=Pycharm2020
+Comment=Pycharm2020:The Python IDE
+Exec="/home/titanic/soft/pycharm/pycharm-professional-2020.1/pycharm-2020.1/bin/pycharm.sh" %f
+Icon=/home/titanic/soft/pycharm/pycharm-professional-2020.1/pycharm-2020.1/bin/pycharm.png
+Terminal=pycharm
+Categories=Pycharm
