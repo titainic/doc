@@ -1,25 +1,18 @@
-https://github.com/geeeeeeeeek/electronic-wechat/releases
-https://blog.csdn.net/ch593030323/article/details/53571807
+https://blog.csdn.net/iamzhtr/article/details/101148853
+https://blog.csdn.net/qq_38656841/article/details/100568125
 
-------------------------------------------------------------------------------------------
-ubuntu18.04 qq 微信添加到最上方，需要的插件
-sudo apt-get install gnome-shell-extension-top-icons-plus gnome-tweaks
+第一步，安装wine。
 
-gnome-tweaks打开扩展
-打开TopIconPlus 
-------------------------------------------------------------------------------------------
-进入/usr/share/applications 目录创建 其对应为WeChat.desktop 结尾的文件 
-内容如下
-创建图标
-[Desktop Entry]
-Name=WeChat
-Exec=/home/tone/Tools/electronic-wechat-linux-x64/electronic-wechat
-Comment=WeChat
-Icon=/home/tone/Tools/electronic-wechat-linux-x64/wechat.png
-Type=Application
-Terminal=false
-Encoding=UTF-8
-Categories=Developer;
-------------------------------------------------------
-添加qq图标到plank
-/home/titanic/.local/share/application/Wine QQ.desktop拖入plank
+sudo apt install wine
+1
+第二步，下载Windows版微信安装包，例如WeChat_C1018.exe，并用wine安装。
+
+wine Downloads/WeChat_C1018.exe
+1
+假如安装界面是英文或乱码或方块，照常点击安装即可。安装后会在Ubuntu应用菜单里有一个WeChat快捷方式，点击启动微信。
+
+第三步，假如启动后微信不能正常显示中文，遵循如下办法解决：
+
+一般情况下，如果你能在Ubuntu里正常显示中文，那么这个步骤应该就足以解决了。右键点击微信快捷方式，设置属性。在Command的env后面加入LANG=zh_CN.UTF-8，注意前后都有空格。退出微信，重新启动微信即可正常显示中文。
+
+如果修改Command也不行，那么可能是来自东南亚丛林的神秘诅咒导致字体缺失了。按照网上流传的这两篇文章解决：文章1、文章2。此时Q4Wine可以帮助你更直观地操作。
