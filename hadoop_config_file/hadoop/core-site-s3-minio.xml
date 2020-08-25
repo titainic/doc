@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+<property>
+        <name>fs.default.name</name>
+        <value>hdfs://bin1:8020</value>
+        <description>HDFS</description>
+    </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/home/titanic/soft/hadoop/hadoop-2.7.3/hdfs/tmp</value>
+        <description>tmp</description>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.root.hosts</name>
+        <value>*</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.root.groups</name>
+        <value>*</value>
+    </property>
+    <property>
+    	<name>fs.jetlake.impl</name>
+    	<value>org.apache.hadoop.fs.JetLakeFileSystem</value>
+    </property>
+    <property>
+        <name>mapred.maxthreads.generate.mapoutput</name>
+        <value>2</value>
+        <description>tmp</description>
+    </property>
+        <property>
+        <name>mapred.maxthreads.partition.closer</name>
+        <value>0</value>
+        <description>tmp</description>
+    </property>
+
+    <property>
+        <name>mapreduce.fileoutputcommitter.algorithm.version</name>
+        <value>2</value>
+        <description>tmp</description>
+    </property>
+
+    <property>
+        <name>mapreduce.job.reduce.slowstart.completedmaps</name>
+        <value>0.99</value>
+        <description>tmp</description>
+    </property>
+
+    <property>
+        <name>mapreduce.reduce.shuffle.input.buffer.percent</name>
+        <value>0.9</value>
+    </property>
+    <property>
+        <name>mapreduce.reduce.shuffle.merge.percent</name>
+        <value>0.9</value>
+    </property>    
+    <property>
+        <name>mapreduce.reduce.speculative</name>
+        <value>false</value>
+    </property>    
+    <property>
+        <name>mapreduce.task.io.sort.factor</name>
+        <value>999</value>
+    </property>    
+    <property>
+        <name>mapreduce.task.sort.spill.percent</name>
+        <value>0.9</value>
+    </property>    
+    
+    <property>
+        <name>fs.s3a.access.key</name>
+        <value>minioadmin</value>
+    </property>    
+    <property>
+        <name>fs.s3a.secret.key</name>
+        <value>12345678</value>
+    </property>    
+    <property>
+        <name>fs.s3a.path.style.access</name>
+        <value>true</value>
+    </property>    
+
+    <property>
+        <name>fs.s3a.buffer.dir</name>
+        <value>${hadoop.tmp.dir}/s3a</value>
+    </property>    
+    <property>
+        <name>fs.s3a.committer.magic.enabled</name>
+        <value>false</value>
+    </property>    
+    <property>
+        <name>fs.s3a.committer.name</name>
+        <value>directory</value>
+    </property>
+    <property>
+        <name>fs.s3a.committer.staging.abort.pending.uploads</name>
+        <value>true</value>
+    </property>    
+    <property>
+        <name>fs.s3a.committer.staging.conflict-mode</name>
+        <value>append</value>
+    </property>    
+    <property>
+        <name>fs.s3a.committer.staging.tmp.path</name>
+        <value>/tmp/staging</value>
+    </property>    
+    <property>
+        <name>fs.s3a.committer.staging.unique-filenames</name>
+        <value>true</value>
+    </property>    
+    <property>
+        <name>fs.s3a.connection.establish.timeout</name>
+        <value>5000</value>
+    </property>    
+    <property>
+        <name>fs.s3a.connection.ssl.enabled</name>
+        <value>false</value>
+    </property>    
+    <property>
+        <name>fs.s3a.connection.timeout</name>
+        <value>200000</value>
+    </property>    <property>
+        <name>fs.s3a.endpoint</name>
+        <value>http://192.168.122.81:9000</value>
+    </property>    
+    <property>
+        <name>fs.s3a.impl</name>
+        <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+    </property>    
+    <property>
+        <name>fs.s3a.committer.threads</name>
+        <value>512</value>
+    </property>    
+    <property>
+        <name>fs.s3a.connection.maximum</name>
+        <value>8192</value>
+    </property>    
+    <property>
+        <name>fs.s3a.fast.upload.active.blocks</name>
+        <value>512</value>
+    </property>    
+    <property>
+        <name>fs.s3a.fast.upload.buffer</name>
+        <value>disk</value>
+    </property>    
+    <property>
+        <name>fs.s3a.fast.upload</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>fs.s3a.max.total.tasks</name>
+        <value>512</value>
+    </property>    
+    
+    <property>
+        <name>fs.s3a.socket.recv.buffer</name>
+        <value>65536</value>
+    </property>    
+    <property>
+        <name>fs.s3a.socket.send.buffer</name>
+        <value>65536</value>
+    </property>    
+    <property>
+        <name>fs.s3a.threads.max</name>
+        <value>512</value>
+   <!--  </property>   
+        <property>
+        <name>fs.s3a.block.size</name>
+        <value>64M</value>
+    </property>    
+    <property>
+        <name>fs.s3a.multipart.size</name>
+        <value>128m</value>
+    </property>    
+    <property>
+        <name>fs.s3a.multipart.threshold</name>
+        <value>128m</value>
+    </property>    
+    -->
+</configuration>
