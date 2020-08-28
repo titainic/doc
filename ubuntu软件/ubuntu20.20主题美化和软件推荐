@@ -1,9 +1,10 @@
 http://blog.csdn.net/terence1212/article/details/52270210
-sudo apt-get install unity-tweak-tool
+
 https://www.linuxidc.com/Linux/2018-04/151674.htm   主题图标
 https://www.ubuntupit.com/install-flat-modern-ant-gtk-theme-ubuntu-variants/
 
 sudo apt-get install terminator
+sudo apt-get install unity-tweak-tool
 
 sudo apt install arc-theme
 
@@ -11,5 +12,10 @@ sudo apt install arc-theme
 sudo add-apt-repository ppa:system76/pop
 sudo apt update
 sudo apt install pop-theme pop-icon-theme
+
+
+sudo add-apt-repository ppa:papirus/papirus
+sudo apt-get update
+sudo apt-get install papirus-icon-theme
 
 
