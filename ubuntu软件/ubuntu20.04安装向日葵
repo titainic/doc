@@ -1,0 +1,28 @@
+https://zhuanlan.zhihu.com/p/144426017
+
+
+.依赖问题解决
+文章的最后还有两种方式解决，解决方式为安装libwebkitgtk 3.0-0包，一种是寻找各种依赖逐一进行安装，解决；另一种是添加Ubuntu 18版本的源下载，如有需求可进行查看
+在Ubuntu 20.04版本，libwebkitgtk 3.0-0是Ubuntu 18 版的依赖包，在20.04版本中使用libwebkit2gtk-4.0-37包进行替代，具体替代方法如下：
+
+1.解开deb文件
+
+dpkg-deb -X SunloginClient-10.1.1.38139_amd64.deb sun
+2.解开依赖文件
+
+dpkg-deb -e SunloginClient-10.1.1.38139_amd64.deb sun/DEBIAN
+3.修改control文件
+
+vim sun/DEBIAN/control
+
+
+4.修改文件内容
+
+将libwebkitgtk 3.0-0修改为libwebkit2gtk-4.0-37
+
+5.重新进行打包
+
+dpkg-deb -b sun
+
+4.安装
+sudo dpkg -i sun.deb
