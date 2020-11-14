@@ -9,9 +9,6 @@ sudo apt-get install unity-tweak-tool
 sudo apt install arc-theme
 
 
-sudo add-apt-repository ppa:system76/pop
-sudo apt update
-sudo apt install pop-theme pop-icon-theme
 
 
 sudo add-apt-repository ppa:papirus/papirus
