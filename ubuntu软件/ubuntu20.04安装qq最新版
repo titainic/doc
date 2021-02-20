@@ -5,9 +5,9 @@ sudo sh install.sh //运行安装wine的脚本文件
 sudo apt-get update -y //保证系统和包列表更新
 sudo apt-get upgrade -y
 
-sudo apt install git //在ubuntu18.04上安装git
+sudo apt install git
 
-wget https://mirrors.aliyun.com/deepin/pool/non-free/d/deepin.com.qq.im/deepin.com.qq.im_9.1.8deepin0_i386.deb
+wget https://packages.deepin.com/deepin/pool/non-free/d/deepin.com.qq.im/deepin.com.qq.im_9.1.8deepin0_i386.deb
 sudo dpkg -i deepin.com.qq.im_9.1.8deepin0_i386.deb
 sudo apt-get install -f
 
