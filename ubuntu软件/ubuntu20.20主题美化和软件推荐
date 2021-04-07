@@ -9,6 +9,13 @@ sudo apt-get install unity-tweak-tool
 sudo apt install arc-theme
 
 
+sudo add-apt-repository ppa:daniruiz/flat-remix
+sudo apt-get update
+sudo apt-get install flat-remix
+
+sudo add-apt-repository ppa:numix/ppa
+sudo apt-get update
+sudo apt-get install numix-icon-theme-circle
 
 
 sudo add-apt-repository ppa:papirus/papirus
