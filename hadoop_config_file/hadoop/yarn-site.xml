@@ -14,41 +14,118 @@
 -->
 <configuration>
 
-    <property>
-        <name>yarn.nodemanager.aux-services</name>
-        <value>mapreduce_shuffle</value>
-    </property>
-    <property>
-        <name>yarn.resourcemanager.webapp.address</name>
-        <value>${yarn.resourcemanager.hostname}:8088</value>
-    </property>
-    <property>
-        <name>yarn.log-aggregation-enable</name>
-        <value>true</value>
-    </property>
-    <!-- Site specific YARN configuration properties -->
-    <property>
-        <name>yarn.scheduler.maximum-allocation-mb</name>
-        <value>2000</value>
-    </property>
-    <property>
-        <name>yarn.nodemanager.resource.memory-mb</name>
-        <value>2000</value>
-    </property>
-    <property>
-        <name>yarn.nodemanager.resource.cpu-vcores</name>
-        <value>1</value>
-    </property>
-    <property>
-        <name>yarn.resourcemanager.address</name>
-        <value>master:8032</value>
-    </property>
-    <property>
-        <name>yarn.resourcemanager.scheduler.address</name>
-        <value>master:8030</value>
-    </property>
-    <property>
-        <name>yarn.resourcemanager.resource-tracker.address</name>
-        <value>master:8031</value>
-    </property>
+   <!-- 指定 MR 走 shuffle -->
+	<property>
+		<name>yarn.nodemanager.aux-services</name>
+		<value>mapreduce_shuffle</value>
+	</property>
+
+	<!-- 指定 ResourceManager 的地址-->
+	<property>
+		<name>yarn.resourcemanager.hostname</name>
+		<value>titanic</value>
+	</property>
+
+	<!-- 环境变量的继承 -->
+	<property>
+		<name>yarn.nodemanager.env-whitelist</name>
+		<value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME</value>
+	</property>
+
+	<!-- 开启日志聚集功能 -->
+	<property>
+		<name>yarn.log-aggregation-enable</name>
+		<value>true</value>
+	</property>
+	
+	<!-- 设置日志聚集服务器地址 -->
+	<property>
+		<name>yarn.log.server.url</name>
+		<value>http://titanic:19888/jobhistory/logs</value>
+	</property>
+	
+	<!-- 设置日志保留时间为 7 天 -->
+	<property>
+		<name>yarn.log-aggregation.retain-seconds</name>
+		<value>604800</value>
+	</property>
+
+	<!-- 选择调度器,默认容量 -->
+	<property>
+		<name>yarn.resourcemanager.scheduler.class</name>
+		<value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler</value>
+	</property>
+
+	<!-- ResourceManager 处理调度器请求的线程数量,默认 50;如果提交的任务数大于 50,可以增加该值,但是不能超过 3 台 * 4 线程 = 12 线程(去除其他应用程序实际不能超过 8) -->
+		 
+	<property>
+		<name>yarn.resourcemanager.scheduler.client.thread-count</name>
+		<value>8</value>
+		</property>
+		
+	<!-- 是否让 yarn 自动检测硬件进行配置,默认是 false,如果该节点有很多其他应用程序,建议手动配置。如果该节点没有其他应用程序,可以采用自动 -->	
+	<property>
+		<name>yarn.nodemanager.resource.detect-hardware-capabilities</name>
+		<value>false</value>
+	</property>
+
+	<!-- 是否将虚拟核数当作 CPU 核数,默认是 false,采用物理 CPU 核数 -->
+	<property>
+		<name>yarn.nodemanager.resource.count-logical-processors-as-cores</name>
+		<value>false</value>
+	</property>
+	
+	<!-- 虚拟核数和物理核数乘数,默认是 1.0 -->
+	<property>
+		<name>yarn.nodemanager.resource.pcores-vcores-multiplier</name>
+		<value>1.0</value>
+	</property>
+	
+	<!-- NodeManager 使用内存数,16G存,默认 8G -->
+	<property>
+		<name>yarn.nodemanager.resource.memory-mb</name>
+		<value>16384</value>
+	</property>
+	
+	<!-- nodemanager 的 CPU 核数,不按照硬件环境自动设定时默认是 8 个,修改为 4 个 -->
+	<property>
+		<name>yarn.nodemanager.resource.cpu-vcores</name>
+		<value>8</value>
+	</property>
+
+	<!-- 容器最小内存,默认 1G -->
+	<property>
+		<name>yarn.scheduler.minimum-allocation-mb</name>
+		<value>1024</value>
+	</property>
+	
+	<!-- 容器最大内存,默认 8G-->
+	<property>
+		<name>yarn.scheduler.maximum-allocation-mb</name>
+		<value>16384</value>
+	</property>
+
+	<!-- 容器最小 CPU 核数,默认 1 个 -->
+	<property>
+		<name>yarn.scheduler.minimum-allocation-vcores</name>
+		<value>1</value>
+	</property>
+
+	<!-- 容器最大 CPU 核数,默认 4 个 -->
+	<property>
+		<name>yarn.scheduler.maximum-allocation-vcores</name>
+		<value>4</value>
+	</property>
+
+	<!-- 虚拟内存检查,默认打开,修改为关闭 -->
+	<property>
+		<name>yarn.nodemanager.vmem-check-enabled</name>
+		<value>false</value>
+	</property>
+	
+	<!-- 虚拟内存和物理内存设置比例,默认 2.1 -->
+	<property>
+		<name>yarn.nodemanager.vmem-pmem-ratio</name>
+		<value>2.1</value>
+	</property>
 </configuration>
