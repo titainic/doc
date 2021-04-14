@@ -17,37 +17,31 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-<property>
-    <name>dfs.name.dir</name>
-    <value>/home/titanic/soft/hadoop/hadoop-2.6.4/hdfs/name</value>
-    <description>namenode上存储hdfs名字空间元数据 </description> 
-</property>
-<property>
-    <name>dfs.data.dir</name>
-    <value>/home/titanic/soft/hadoop/hadoop-2.6.4/hdfs/data</value>
-    <description>datanode上数据块的物理存储位置</description>
-</property>
-<property>
-    <name>dfs.replication</name>
-    <value>1</value>
-    <description>副本个数，配置默认是3,应小于datanode机器数量</description>
-</property>
-<!--alluxio -->
-<property>
-  <name>fs.alluxio.impl</name>
-  <value>alluxio.hadoop.FileSystem</value>
-  <description>The Alluxio FileSystem (Hadoop 1.x and 2.x)</description>
-</property>
-<property>
-  <name>fs.alluxio-ft.impl</name>
-  <value>alluxio.hadoop.FaultTolerantFileSystem</value>
-  <description>The Alluxio FileSystem (Hadoop 1.x and 2.x) with fault tolerant support</description>
-</property>
-<property>
-  <name>fs.AbstractFileSystem.alluxio.impl</name>
-  <value>alluxio.hadoop.AlluxioFileSystem</value>
-  <description>The Alluxio AbstractFileSystem (Hadoop 2.x)</description>
-</property>
-<!--alluxio -->
+<!-- nn web 端访问地址-->
+	<property>
+		<name>dfs.namenode.http-address</name>
+		<value>titanic:9870</value>
+	</property>
+	<!-- 2nn web 端访问地址-->
+	<property>
+		<name>dfs.namenode.secondary.http-address</name>
+		<value>titanic:9868</value>
+	</property>
+
+	<!--掉线时限参数设置-->
+	<property>
+		<name>dfs.namenode.heartbeat.recheck-interval</name>
+		<value>300000</value>
+	</property>
+	<property>
+		<name>dfs.heartbeat.interval</name>
+		<value>3</value>
+	</property>
+
+	<!-- NameNode 有一个工作线程池,默认值是 10 -->
+	<property>
+		<name>dfs.namenode.handler.count</name>
+		<value>20</value>
+	</property>
 
 </configuration>
