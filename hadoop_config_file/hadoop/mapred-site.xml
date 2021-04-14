@@ -17,21 +17,130 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-    <property>
-        <name>mapreduce.framework.name</name>
-        <value>yarn</value>
-    </property>
-    <property>
-        <name>mapred.child.java.opts</name>
-        <value>-Xmx2048m</value>
-    </property>
+   <!-- 指定 MapReduce 程序运行在 Yarn 上 -->
+	<property>
+		<name>mapreduce.framework.name</name>
+		<value>yarn</value>
+	</property>
 
-    <property>
-        <name>mapreduce.jobhistory.address</name>
-        <value>master:10020</value>
-    </property>
-    <property>
-        <name>mapreduce.jobhistory.webapp.address</name>
-        <value>master:19888</value>
-    </property>
+	<!-- 历史服务器端地址 -->
+	<property>
+		<name>mapreduce.jobhistory.address</name>
+		<value>titanic:10020</value>
+	</property>
+	
+	<!-- 历史服务器 web 端地址 -->
+	<property>
+		<name>mapreduce.jobhistory.webapp.address</name>
+		<value>titanic:19888</value>
+	</property>
+
+	<!-- 开启 uber 模式,默认关闭 -->
+	<property>
+		<name>mapreduce.job.ubertask.enable</name>
+		<value>true</value>
+	</property>
+
+	<!-- 开启 uber 模式,实现 JVM 重用(计算方向)默认情况下,每个 Task 任务都需要启动一个 JVM 来运行,如果 Task 任务计算的数据量很小,我们可以让同一个 Job 的多个 Task 运行在一个 JVM 中,不必为每个 Task 都开启一个 JVM-->
+	<!-- uber 模式中最大的 mapTask 数量,可向下修改 -->
+	<property>
+		<name>mapreduce.job.ubertask.maxmaps</name>
+		<value>9</value>
+	</property>
+
+	<!-- uber 模式中最大的 reduce 数量,可向下修改 -->
+	<property>
+		<name>mapreduce.job.ubertask.maxreduces</name>
+		<value>1</value>
+	</property>
+
+	<!-- uber 模式中最大的输入数据量,默认使用 dfs.blocksize 的值,可向下修改 -->
+	<property>
+		<name>mapreduce.job.ubertask.maxbytes</name>
+		<value></value>
+	</property>
+
+	<!-- 环形缓冲区大小,默认 100m -->
+	<property>
+		<name>mapreduce.task.io.sort.mb</name>
+		<value>100</value>
+	</property>
+
+	<!-- 环形缓冲区溢写阈值,默认 0.8 -->
+	<property>
+		<name>mapreduce.map.sort.spill.percent</name>
+		<value>0.80</value>
+	</property>
+
+	<!-- merge 合并次数,默认 10 个 -->
+	<property>
+		<name>mapreduce.task.io.sort.factor</name>
+		<value>10</value>
+	</property>
+
+	<!-- maptask 内 存 , 默 认 1g ; maptask 堆 内 存 大 小 默 认 和 该 值 大 小 一 致mapreduce.map.java.opts -->
+	<property>
+		<name>mapreduce.map.memory.mb</name>
+		<value>-1</value>
+	</property>
+
+	<!-- matask 的 CPU 核数,默认 1 个 -->
+	<property>
+		<name>mapreduce.map.cpu.vcores</name>
+		<value>1</value>
+	</property>
+
+	<!-- matask 异常重试次数,默认 4 次 -->
+	<property>
+		<name>mapreduce.map.maxattempts</name>
+		<value>4</value>
+	</property>
+
+	<!-- 每个 Reduce 去 Map 中拉取数据的并行数。默认值是 5 -->
+	<property>
+		<name>mapreduce.reduce.shuffle.parallelcopies</name>
+		<value>5</value>
+	</property>
+
+	<!-- Buffer 大小占 Reduce 可用内存的比例,默认值 0.7 -->
+	<property>
+		<name>mapreduce.reduce.shuffle.input.buffer.percent</name>
+		<value>0.70</value>
+	</property>
+
+	<!-- Buffer 中的数据达到多少比例开始写入磁盘,默认值 0.66。 -->
+	<property>
+		<name>mapreduce.reduce.shuffle.merge.percent</name>
+		<value>0.66</value>
+	</property>
+
+	<!-- reducetask 内存,默认 1g;reducetask 堆内存大小默认和该值大小一致mapreduce.reduce.java.opts -->
+	<property>
+		<name>mapreduce.reduce.memory.mb</name>
+		<value>-1</value>
+	</property>
+
+	<!-- reducetask 的 CPU 核数,默认 1 个 -->
+	<property>
+		<name>mapreduce.reduce.cpu.vcores</name>
+		<value>2</value>
+	</property>
+
+	<!-- reducetask 失败重试次数,默认 4 次 -->
+	<property>
+		<name>mapreduce.reduce.maxattempts</name>
+		<value>4</value>
+	</property>
+
+	<!-- 当 MapTask 完成的比例达到该值后才会为 ReduceTask 申请资源。默认是 0.05-->
+	<property>
+		<name>mapreduce.job.reduce.slowstart.completedmaps</name>
+		<value>0.05</value>
+	</property>
+
+	<!-- 如果程序在规定的默认 10 分钟内没有读到数据,将强制超时退出 -->
+	<property>
+		<name>mapreduce.task.timeout</name>
+		<value>600000</value>
+	</property>
 </configuration>
