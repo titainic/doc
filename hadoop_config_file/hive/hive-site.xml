@@ -9,7 +9,7 @@
 	
 	<property>
 		<name>javax.jdo.option.ConnectionURL</name>
-		<value>jdbc:mysql://127.0.0.1:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+		<value>jdbc:mysql://titanic:3306/hive?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=GMT&allowPublicKeyRetrieval=true</value>
 		<description>Hive元数据库的连接串，红色为数据库名</description>
 	</property>
 	
