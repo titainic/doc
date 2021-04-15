@@ -1,0 +1,220 @@
+ 配置环境变量(如果不是root用户，配置自己的~/.bash_profile即可)：
+ vi /etc/profile.d/titanic.sh
+ export HIVE_HOME=/home/titanic/soft/hadoop/apache-hive-3.1.2-bin
+ export PATH=$HIVE_HOME/bin:$PATH
+ source /etc/profile.d/titanic.sh
+ -------------------------------------------------------------------------------
+ 修改hive-env.sh
+export JAVA_HOME=/usr/local/jdk1.7.0_80
+export HADOOP_HOME=/usr/lib/jvm/jdk1.8.0_281
+ ---------------------------------------------------------------------------------
+ 安装mysql
+
+root远程登录
+-----------------------
+  vim /etc/mysql/mysql.conf.d/mysqld.cnf 找到
+      bind-address           = 127.0.0.1
+      这行，注释掉（如下）
+     #bind-address           = 127.0.0.1
+  //授权root用户远程访问，其中% 表示可以远程访问
+   grant all privileges on *.* to 'root'@'%' identified by 'a' with grant option;
+   flush privileges
+-----------------------------------------
+
+create database hive;
+
+配置hive-site.xml中jdbc如下
+&amp; 相当于 &
+jdbc:mysql://127.0.0.1:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false
+
+mysql驱动Jar放入${HIVE_HOME}/lib目录
+
+-------------------------------------------------------------------------------------
+修改hive内置引擎为spark
+hive节点配置$SPARK_HOME环境变量，并且安装spark
+
+在hive/conf文件中添加spark-defaults.conf
+新增配置如下
+spark.master                yarn
+spark.eventLog.enabled		true
+spark.eventLog.dir		    hdfs://titanic:8020/spark-history
+#可优化。默认1G
+spark.executor.memory		4g
+#可优化。默认1G
+spark.driver.memory		    2g
+
+下载spark3.0.0纯净版（名称为spark-3.0.0-bin-without-hadoop.tgz）
+解压spark-3.0.0-bin-without-hadoop.tgz
+cd spark-3.0.0-bin-without-hadoop/jars
+拷贝jars/下所有jar至 hdfs://titanic:8020/spark-jars/
+新建 该hdfs路径：hdfs://titanic:8020/spark-jars/
+
+-------------------------------------------------------------------------------------
+
+
+hive-site.xml
+内容如下
+----------------------------------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="textl" href="configuration.xsl"?>
+<configuration>
+<property>
+		<name>hive.metastore.warehouse.dir</name>
+		<value>hdfs://titanic:8020/user/hive/warehouse</value>
+		<description>Hive在HDFS上的根目录</description>
+	</property>
+
+	<property>
+		<name>javax.jdo.option.ConnectionURL</name>
+		<value>jdbc:mysql://127.0.0.1:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+		<description>Hive元数据库的连接串，红色为数据库名</description>
+	</property>
+
+	<property>
+		<name>javax.jdo.option.ConnectionDriverName</name>
+		<value>com.mysql.jdbc.Driver</value>
+		<description>Hive元数据库JDBC驱动</description>
+	</property>
+
+	<property>
+		<name>javax.jdo.option.ConnectionUserName</name>
+		<value>root</value>
+		<description>Hive元数据库用户名</description>
+	</property>
+
+	<property>
+		<name>javax.jdo.option.ConnectionPassword</name>
+		<value>a</value>
+		<description>Hive元数据库密码</description>
+	</property>
+
+	<property>
+		<name>datanucleus.autoCreateTables</name>
+		<value>true</value>
+		<description>不存在时，自动创建Hive元数据表</description>
+	</property>
+
+	<property>
+		<name>datanucleus.autoCreateColumns</name>
+		<value>true</value>
+		<description>不存在时，自动创建Hive元数据列</description>
+	</property>
+
+	<property>
+		<name>datanucleus.fixedDatastore</name>
+		<value>true</value>
+	</property>
+
+	<property>
+		<name>datanucleus.autoStartMechanism</name>
+		<value>SchemaTable</value>
+	</property>
+
+	<property>
+		<name>hive.metastore.schema.verification</name>
+		<value>false</value>
+	</property>
+
+	<property>
+		<name>hive.server2.thrift.port</name>
+		<value>10000</value>
+	</property>
+
+	<property>
+		<name>hive.server2.thrift.bind.host</name>
+		<value>titanic</value>
+	</property>
+
+	<property>
+		<name>hive.metastore.event.db.notification.api.auth</name>
+		<value>false</value>
+	</property>
+
+	<property>
+    		<name>hive.cli.print.header</name>
+   	 	<value>true</value>
+	</property>
+
+	<property>
+		<name>hive.cli.print.current.db</name>
+		<value>true</value>
+		<description>打印数据库</description>
+	</property>
+
+
+	<!--Hive metastore start   -->
+	<property>
+		<name>hive.metastore.uris</name>
+		<value>thrift://titanic:9083</value>
+	</property>
+
+
+
+	<!-- spark配置-->
+	<property>
+ 		<name>spark.yarn.jars</name>
+		<value>hdfs://titanic:8020/spark-jars/*</value>
+	</property>
+
+	<!--Hive执行引擎-->
+	<property>
+	 	 <name>hive.execution.engine</name>
+		<value>spark</value>
+	</property>
+
+	<!--Hive和Spark连接超时时间-->
+	<property>
+		 <name>hive.spark.client.connect.timeout</name>
+		<value>10000ms</value>
+	</property>
+
+</configuration>
+------------------------------------------------------------------------------------------------
+修改hive日志目录
+修改hive/conf/hive-log4j2.properties
+property.hive.log.dir =/home/titanic/soft/hadoop/apache-hive-3.1.2-bin/logs
+----------------------------------------------------------------------------------------------
+初始化hive
+.//bin/schematool -dbType mysql -initSchema -verbose
+-------------------------------------------------------------------------------------------------
+启动顺序不能错，要以一下命令的顺序启动
+#启动metastore服务
+~ bin/hive --service metastore &
+Starting Hive Metastore Server
+
+#启动hiveserver服务
+~ bin/hive --service hiveserver2 &
+Starting Hive Thrift Server
+
+#启动hive客户端
+~ bin/hive shell
+Logging initialized using configuration in file:/root/hive-0.9.0/conf/hive-log4j.properties
+Hive history file=/tmp/root/hive_job_log_root_201211141845_1864939641.txt
+
+hive> show tables
+OK
+
+http://127.0.0.1:10002/hiveserver2.jsp  web页面
+-------------------------------------------------------------------
+dberver使用jdbc链接hive
+修改etc/hadoop/core-site.xml
+
+把root换成系统用户titanic
+
+<property>
+    <name>hadoop.proxyuser.titanic.hosts</name>
+    <value>*</value>
+</property>
+<property>
+    <name>hadoop.proxyuser.titanic.groups</name>
+    <value>*</value>
+</property>
+
+dberver中
+jdbcurl		jdbc:hive2://titanic:10000/default
+主机		titanic      端口10000
+数据库		default
+用户名		titanic
+密码		a
+
+
