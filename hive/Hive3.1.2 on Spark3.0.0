@@ -8,6 +8,7 @@
 export JAVA_HOME=/usr/local/jdk1.7.0_80
 export HADOOP_HOME=/usr/lib/jvm/jdk1.8.0_281
  ---------------------------------------------------------------------------------
+ 
  安装mysql
 
 root远程登录
@@ -20,7 +21,6 @@ root远程登录
    grant all privileges on *.* to 'root'@'%' identified by 'a' with grant option;
    flush privileges
 -----------------------------------------
-
 create database hive;
 
 配置hive-site.xml中jdbc如下
@@ -187,6 +187,9 @@ hive-site.xml
 修改hive日志目录
 修改hive/conf/hive-log4j2.properties
 property.hive.log.dir =/home/titanic/soft/hadoop/apache-hive-3.1.2-bin/logs
+
+修改冲突 日志jar
+mv hive/lib/log4j-slf4j-impl-2.10.0.jar  hive/lib/log4j-slf4j-impl-2.10.0.jar.back
 ----------------------------------------------------------------------------------------------
 初始化hive
 .//bin/schematool -dbType mysql -initSchema -verbose
