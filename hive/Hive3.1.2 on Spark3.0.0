@@ -29,6 +29,20 @@ jdbc:mysql://127.0.0.1:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false
 
 mysql驱动Jar放入${HIVE_HOME}/lib目录
 
+mysql 8.0配置
+修改校验密码策略等级
+set global validate_password.policy=LOW;
+
+设置密码长度至少为 6
+set global validate_password.length=6;
+
+创建hive用户
+create user 'hive'@'%' identified by  '123456'
+
+授权
+grant all privileges on *.* to 'hive'@'%' with grant option
+
+flush privileges;
 -------------------------------------------------------------------------------------
 修改hive内置引擎为spark
 hive节点配置$SPARK_HOME环境变量，并且安装spark
@@ -66,7 +80,7 @@ hive-site.xml
 
 	<property>
 		<name>javax.jdo.option.ConnectionURL</name>
-		<value>jdbc:mysql://127.0.0.1:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+		<value>jdbc:mysql://titanic:3306/hive?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=GMT&allowPublicKeyRetrieval=true</value>
 		<description>Hive元数据库的连接串，红色为数据库名</description>
 	</property>
 
