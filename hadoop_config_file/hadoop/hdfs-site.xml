@@ -22,6 +22,17 @@
 		<name>dfs.namenode.http-address</name>
 		<value>titanic:9870</value>
 	</property>
+	
+	<property>
+                <name>dfs.namenode.name.dir</name>
+                <value>/home/titanic/soft/hadoop/hadoop-3.1.3/data/nn</value>
+	</property>
+
+		<property>
+                <name>dfs.datanode.data.dir</name>
+                <value>/home/titanic/soft/hadoop/hadoop-3.1.3/data/dn</value>
+        </property>
+	
 	<!-- 2nn web 端访问地址-->
 	<property>
 		<name>dfs.namenode.secondary.http-address</name>
