@@ -128,4 +128,10 @@
 		<name>yarn.nodemanager.vmem-pmem-ratio</name>
 		<value>2.1</value>
 	</property>
+	
+	<!-- 开启UI2界面 -->
+	<property>
+                <name>yarn.webapp.ui2.enable</name>
+                <value>true</value>
+        </property>
 </configuration>
