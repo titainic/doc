@@ -1,0 +1,11 @@
+打开下载的binend.ovpn文件
+
+删除其中
+<auth-user-pass>
+binend@live.cn
+79966325
+</auth-user-pass>
+
+然后保存binend.ovpn文件
+
+网络中导入保存的VPN配置文件
